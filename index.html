@@ -4,18 +4,63 @@ const TOTAL = 10;
 const MEMORIA = 30; // quantas perguntas evita repetir
 
 const banco = [
-["Amar a verdade e responsabilidade", "PRECEITO"],
-["Respeitar dignidade humana", "PRECEITO"],
-["Cumprir leis e regulamentos", "PRECEITO"],
-["Ser justo e imparcial", "PRECEITO"],
-["Dedicação e fidelidade à Pátria", "DEVER"],
+
+/* ================= PRECEITOS ================= */
+
+["Amar a verdade e a responsabilidade como fundamento de dignidade pessoal", "PRECEITO"],
+["Exercer com autoridade, eficiência e probidade as funções do cargo", "PRECEITO"],
+["Respeitar a dignidade da pessoa humana", "PRECEITO"],
+["Cumprir e fazer cumprir leis, regulamentos e ordens", "PRECEITO"],
+["Ser justo e imparcial no julgamento dos atos", "PRECEITO"],
+["Zelar pelo preparo moral, intelectual e físico próprio e dos subordinados", "PRECEITO"],
+["Empregar todas as energias em benefício do serviço", "PRECEITO"],
+["Praticar camaradagem e espírito de cooperação", "PRECEITO"],
+["Ser discreto em atitudes e linguagem", "PRECEITO"],
+["Abster-se de tratar matéria sigilosa fora do âmbito apropriado", "PRECEITO"],
+["Acatar autoridades civis", "PRECEITO"],
+["Cumprir deveres de cidadão", "PRECEITO"],
+["Proceder de maneira ilibada na vida pública e privada", "PRECEITO"],
+["Observar normas da boa educação", "PRECEITO"],
+["Garantir assistência moral e material ao lar", "PRECEITO"],
+["Conduzir-se de modo a preservar disciplina e decoro militar", "PRECEITO"],
+["Não usar posto para obter vantagens pessoais", "PRECEITO"],
+["Não usar designações hierárquicas na inatividade para fins políticos", "PRECEITO"],
+["Não usar designações hierárquicas em atividades comerciais ou industriais", "PRECEITO"],
+["Zelar pelo bom nome das Forças Armadas", "PRECEITO"],
+
+/* ================= DEVERES ================= */
+
+["Dedicação e fidelidade à Pátria mesmo com sacrifício da vida", "DEVER"],
+["Culto aos símbolos nacionais", "DEVER"],
+["Probidade e lealdade em todas as circunstâncias", "DEVER"],
 ["Disciplina e respeito à hierarquia", "DEVER"],
-["Patriotismo", "VALOR"],
-["Espírito de corpo", "VALOR"],
-["Estabilidade após 10 anos", "DIREITO"],
-["Assistência médico-hospitalar", "DIREITO"],
-["Uso de uniformes militares", "PRERROGATIVA"],
-["Foro especial em crimes militares", "PRERROGATIVA"]
+["Cumprimento rigoroso das obrigações e ordens", "DEVER"],
+["Tratar subordinado com dignidade e urbanidade", "DEVER"],
+
+/* ================= VALORES ================= */
+
+["Patriotismo e fidelidade à Pátria", "VALOR"],
+["Civismo e culto das tradições históricas", "VALOR"],
+["Fé na missão das Forças Armadas", "VALOR"],
+["Espírito de corpo e orgulho da organização", "VALOR"],
+["Amor à profissão das armas", "VALOR"],
+["Aprimoramento técnico-profissional", "VALOR"],
+
+/* ================= DIREITOS ================= */
+
+["Estabilidade após 10 anos de serviço", "DIREITO"],
+["Uso das designações hierárquicas", "DIREITO"],
+["Ocupação de cargo correspondente ao posto", "DIREITO"],
+["Percepção de remuneração", "DIREITO"],
+["Assistência médico-hospitalar ao militar e dependentes", "DIREITO"],
+
+/* ================= PRERROGATIVAS ================= */
+
+["Uso de títulos, uniformes e insígnias militares", "PRERROGATIVA"],
+["Honras e sinais de respeito previstos em lei", "PRERROGATIVA"],
+["Cumprimento de pena apenas em organização militar", "PRERROGATIVA"],
+["Julgamento em foro especial nos crimes militares", "PRERROGATIVA"]
+
 ];
 
 let memoria = JSON.parse(localStorage.getItem("memoria")) || [];
@@ -52,4 +97,5 @@ function novaRodada(){
   pontos = 0;
   mostrar();
 }
+
 </script>
