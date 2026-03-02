@@ -1,0 +1,55 @@
+<script>
+const categorias = ["VALOR", "PRECEITO", "DEVER", "DIREITO", "PRERROGATIVA"];
+const TOTAL = 10;
+const MEMORIA = 30; // quantas perguntas evita repetir
+
+const banco = [
+["Amar a verdade e responsabilidade", "PRECEITO"],
+["Respeitar dignidade humana", "PRECEITO"],
+["Cumprir leis e regulamentos", "PRECEITO"],
+["Ser justo e imparcial", "PRECEITO"],
+["Dedicação e fidelidade à Pátria", "DEVER"],
+["Disciplina e respeito à hierarquia", "DEVER"],
+["Patriotismo", "VALOR"],
+["Espírito de corpo", "VALOR"],
+["Estabilidade após 10 anos", "DIREITO"],
+["Assistência médico-hospitalar", "DIREITO"],
+["Uso de uniformes militares", "PRERROGATIVA"],
+["Foro especial em crimes militares", "PRERROGATIVA"]
+];
+
+let memoria = JSON.parse(localStorage.getItem("memoria")) || [];
+let stats = JSON.parse(localStorage.getItem("stats")) || {total:0, acertos:0};
+
+let questoes = [];
+let indice = 0;
+let pontos = 0;
+
+function embaralhar(arr){
+  return arr.sort(()=>Math.random()-0.5);
+}
+
+function selecionarQuestoes(){
+  let disponiveis = banco.filter(q => !memoria.includes(q[0]));
+
+  if(disponiveis.length < TOTAL){
+    memoria = [];
+    disponiveis = banco;
+  }
+
+  const selecionadas = embaralhar([...disponiveis]).slice(0, TOTAL);
+
+  memoria.push(...selecionadas.map(q=>q[0]));
+  memoria = memoria.slice(-MEMORIA);
+  localStorage.setItem("memoria", JSON.stringify(memoria));
+
+  return selecionadas;
+}
+
+function novaRodada(){
+  questoes = selecionarQuestoes();
+  indice = 0;
+  pontos = 0;
+  mostrar();
+}
+</script>
