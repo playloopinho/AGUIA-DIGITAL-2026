@@ -1,101 +1,135 @@
-<script>
-const categorias = ["VALOR", "PRECEITO", "DEVER", "DIREITO", "PRERROGATIVA"];
-const TOTAL = 10;
-const MEMORIA = 30; // quantas perguntas evita repetir
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Treino Militar</title>
 
+<style>
+body { font-family: Arial; background:#0f172a; color:white; text-align:center; padding:20px; }
+.card { background:#1e293b; padding:20px; border-radius:12px; max-width:600px; margin:auto; }
+button { width:100%; margin:8px 0; padding:12px; border:none; border-radius:8px; font-size:16px; background:#2563eb; color:white; }
+button:hover { background:#1d4ed8; }
+.progress { height:10px; background:#334155; border-radius:6px; margin:10px 0; }
+.bar { height:10px; background:#22c55e; width:0%; border-radius:6px; }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>Treino de Conceitos Militares</h2>
+<div class="progress"><div id="bar" class="bar"></div></div>
+<p id="pergunta"></p>
+<div id="opcoes"></div>
+<button onclick="novaRodada()">Nova rodada</button>
+<button onclick="mostrarStats()">Estatísticas</button>
+<p id="info"></p>
+</div>
+
+<script>
+const categorias = ["VALOR","PRECEITO","DEVER","DIREITO","PRERROGATIVA"];
+const TOTAL = 10;
+const MEMORIA = 40;
+
+/* ===== BANCO GRANDE ===== */
 const banco = [
 
-/* ================= PRECEITOS ================= */
+["Amar a verdade e a responsabilidade como fundamento de dignidade pessoal","PRECEITO"],
+["Exercer com autoridade, eficiência e probidade as funções do cargo","PRECEITO"],
+["Respeitar a dignidade da pessoa humana","PRECEITO"],
+["Cumprir e fazer cumprir leis e regulamentos","PRECEITO"],
+["Ser justo e imparcial no julgamento dos atos","PRECEITO"],
+["Zelar pelo preparo moral, intelectual e físico próprio e dos subordinados","PRECEITO"],
+["Empregar todas as energias em benefício do serviço","PRECEITO"],
+["Praticar camaradagem e espírito de cooperação","PRECEITO"],
+["Ser discreto em atitudes e linguagem","PRECEITO"],
+["Abster-se de tratar matéria sigilosa fora do âmbito apropriado","PRECEITO"],
+["Acatar autoridades civis","PRECEITO"],
+["Cumprir deveres de cidadão","PRECEITO"],
+["Proceder de maneira ilibada na vida pública e privada","PRECEITO"],
+["Observar normas da boa educação","PRECEITO"],
+["Garantir assistência moral e material ao lar","PRECEITO"],
+["Conduzir-se de modo a preservar disciplina e decoro militar","PRECEITO"],
+["Não usar posto para obter vantagens pessoais","PRECEITO"],
+["Zelar pelo bom nome das Forças Armadas","PRECEITO"],
 
-["Amar a verdade e a responsabilidade como fundamento de dignidade pessoal", "PRECEITO"],
-["Exercer com autoridade, eficiência e probidade as funções do cargo", "PRECEITO"],
-["Respeitar a dignidade da pessoa humana", "PRECEITO"],
-["Cumprir e fazer cumprir leis, regulamentos e ordens", "PRECEITO"],
-["Ser justo e imparcial no julgamento dos atos", "PRECEITO"],
-["Zelar pelo preparo moral, intelectual e físico próprio e dos subordinados", "PRECEITO"],
-["Empregar todas as energias em benefício do serviço", "PRECEITO"],
-["Praticar camaradagem e espírito de cooperação", "PRECEITO"],
-["Ser discreto em atitudes e linguagem", "PRECEITO"],
-["Abster-se de tratar matéria sigilosa fora do âmbito apropriado", "PRECEITO"],
-["Acatar autoridades civis", "PRECEITO"],
-["Cumprir deveres de cidadão", "PRECEITO"],
-["Proceder de maneira ilibada na vida pública e privada", "PRECEITO"],
-["Observar normas da boa educação", "PRECEITO"],
-["Garantir assistência moral e material ao lar", "PRECEITO"],
-["Conduzir-se de modo a preservar disciplina e decoro militar", "PRECEITO"],
-["Não usar posto para obter vantagens pessoais", "PRECEITO"],
-["Não usar designações hierárquicas na inatividade para fins políticos", "PRECEITO"],
-["Não usar designações hierárquicas em atividades comerciais ou industriais", "PRECEITO"],
-["Zelar pelo bom nome das Forças Armadas", "PRECEITO"],
+["Dedicação e fidelidade à Pátria","DEVER"],
+["Culto aos símbolos nacionais","DEVER"],
+["Probidade e lealdade em todas as circunstâncias","DEVER"],
+["Disciplina e respeito à hierarquia","DEVER"],
+["Cumprimento rigoroso das obrigações e ordens","DEVER"],
+["Tratar subordinado com dignidade e urbanidade","DEVER"],
 
-/* ================= DEVERES ================= */
+["Patriotismo e fidelidade à Pátria","VALOR"],
+["Civismo e tradições históricas","VALOR"],
+["Fé na missão das Forças Armadas","VALOR"],
+["Espírito de corpo","VALOR"],
+["Amor à profissão das armas","VALOR"],
+["Aprimoramento técnico-profissional","VALOR"],
 
-["Dedicação e fidelidade à Pátria mesmo com sacrifício da vida", "DEVER"],
-["Culto aos símbolos nacionais", "DEVER"],
-["Probidade e lealdade em todas as circunstâncias", "DEVER"],
-["Disciplina e respeito à hierarquia", "DEVER"],
-["Cumprimento rigoroso das obrigações e ordens", "DEVER"],
-["Tratar subordinado com dignidade e urbanidade", "DEVER"],
+["Estabilidade após 10 anos de serviço","DIREITO"],
+["Uso das designações hierárquicas","DIREITO"],
+["Cargo correspondente ao posto","DIREITO"],
+["Remuneração","DIREITO"],
+["Assistência médico-hospitalar","DIREITO"],
 
-/* ================= VALORES ================= */
-
-["Patriotismo e fidelidade à Pátria", "VALOR"],
-["Civismo e culto das tradições históricas", "VALOR"],
-["Fé na missão das Forças Armadas", "VALOR"],
-["Espírito de corpo e orgulho da organização", "VALOR"],
-["Amor à profissão das armas", "VALOR"],
-["Aprimoramento técnico-profissional", "VALOR"],
-
-/* ================= DIREITOS ================= */
-
-["Estabilidade após 10 anos de serviço", "DIREITO"],
-["Uso das designações hierárquicas", "DIREITO"],
-["Ocupação de cargo correspondente ao posto", "DIREITO"],
-["Percepção de remuneração", "DIREITO"],
-["Assistência médico-hospitalar ao militar e dependentes", "DIREITO"],
-
-/* ================= PRERROGATIVAS ================= */
-
-["Uso de títulos, uniformes e insígnias militares", "PRERROGATIVA"],
-["Honras e sinais de respeito previstos em lei", "PRERROGATIVA"],
-["Cumprimento de pena apenas em organização militar", "PRERROGATIVA"],
-["Julgamento em foro especial nos crimes militares", "PRERROGATIVA"]
-
+["Uso de uniformes e insígnias militares","PRERROGATIVA"],
+["Honras e sinais de respeito previstos em lei","PRERROGATIVA"],
+["Cumprimento de pena em organização militar","PRERROGATIVA"],
+["Foro especial em crimes militares","PRERROGATIVA"]
 ];
 
 let memoria = JSON.parse(localStorage.getItem("memoria")) || [];
 let stats = JSON.parse(localStorage.getItem("stats")) || {total:0, acertos:0};
 
-let questoes = [];
-let indice = 0;
-let pontos = 0;
+let questoes=[], indice=0, pontos=0;
 
-function embaralhar(arr){
-  return arr.sort(()=>Math.random()-0.5);
-}
+function embaralhar(a){ return a.sort(()=>Math.random()-0.5); }
 
 function selecionarQuestoes(){
-  let disponiveis = banco.filter(q => !memoria.includes(q[0]));
-
-  if(disponiveis.length < TOTAL){
-    memoria = [];
-    disponiveis = banco;
-  }
-
-  const selecionadas = embaralhar([...disponiveis]).slice(0, TOTAL);
-
-  memoria.push(...selecionadas.map(q=>q[0]));
+  let disp = banco.filter(q=>!memoria.includes(q[0]));
+  if(disp.length<TOTAL){ memoria=[]; disp=banco; }
+  let sel = embaralhar([...disp]).slice(0,TOTAL);
+  memoria.push(...sel.map(q=>q[0]));
   memoria = memoria.slice(-MEMORIA);
-  localStorage.setItem("memoria", JSON.stringify(memoria));
-
-  return selecionadas;
+  localStorage.setItem("memoria",JSON.stringify(memoria));
+  return sel;
 }
 
-function novaRodada(){
-  questoes = selecionarQuestoes();
-  indice = 0;
-  pontos = 0;
-  mostrar();
+function novaRodada(){ questoes=selecionarQuestoes(); indice=0; pontos=0; mostrar(); }
+
+function mostrar(){
+  if(indice>=questoes.length){
+    localStorage.setItem("stats",JSON.stringify(stats));
+    alert(`Pontuação: ${pontos} de ${TOTAL}`);
+    return;
+  }
+  document.getElementById("pergunta").innerText=questoes[indice][0];
+  document.getElementById("info").innerText=`Pergunta ${indice+1} de ${TOTAL}`;
+  document.getElementById("bar").style.width=(indice/TOTAL*100)+"%";
+  const op=document.getElementById("opcoes"); op.innerHTML="";
+  embaralhar([...categorias]).forEach(cat=>{
+    const b=document.createElement("button");
+    b.innerText=cat; b.onclick=()=>responder(cat); op.appendChild(b);
+  });
 }
 
+function responder(escolha){
+  const correta=questoes[indice][1];
+  stats.total++;
+  if(escolha===correta){ pontos++; stats.acertos++; alert("Correto!"); }
+  else{ alert("Errado! Era "+correta); }
+  indice++; mostrar();
+}
+
+function mostrarStats(){
+  const taxa=stats.total?(stats.acertos/stats.total*100).toFixed(1):0;
+  alert(`Respondidas: ${stats.total}\nAcertos: ${stats.acertos}\nTaxa: ${taxa}%`);
+}
+
+novaRodada();
 </script>
+
+</body>
+</html>
