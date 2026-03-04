@@ -8,7 +8,7 @@
     /* FUNDO AZUL ÚNICO */
     body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 120px; }
     
-    /* BANNER SEM LINHAS DIVISÓRIAS */
+    /* BANNER CFN */
     .header-banner {
         width: 100%;
         height: 180px;
@@ -26,6 +26,7 @@
     /* CAIXA DE CONTEÚDO */
     .box { background:#132b52; padding:25px; border-radius:12px; width:100%; max-width:800px; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #1c437a; }
     
+    /* OPÇÕES OBJETIVAS */
     .option { background:#4da6ff; color:black; padding:12px; margin:10px 0; border-radius:8px; cursor:pointer; font-weight:bold; text-align: left; transition: 0.2s; }
     .option:hover { background: #80bfff; }
     .correct { background:green !important; color:white; }
@@ -33,18 +34,22 @@
     
     input { width:90%; padding:12px; margin-top:15px; border-radius: 5px; border: 2px solid #4da6ff; background: #0b1e3d; color: white; font-size: 16px; }
     
-    button { margin-top:15px; padding:12px 25px; border:none; border-radius:5px; cursor:pointer; background: #4da6ff; color: #0b1e3d; font-weight: bold; text-transform: uppercase; }
+    /* BOTÕES EM AMARELO */
+    button { margin-top:15px; padding:12px 25px; border:none; border-radius:5px; cursor:pointer; background: #ffcc00; color: #0b1e3d; font-weight: bold; text-transform: uppercase; }
+    button:hover { background: #e6b800; }
 
-    #feedback-area { background: #071426; padding: 15px; margin-top: 15px; border-left: 5px solid #4da6ff; text-align: left; font-size: 14px; }
+    /* FEEDBACK DISSERTATIVO EM AMARELO */
+    #feedback-area { background: #071426; padding: 15px; margin-top: 15px; border-left: 5px solid #ffcc00; text-align: left; font-size: 14px; }
+    .res-oficial { color: #ffcc00; font-weight: bold; }
 
-    /* BARRA DE CONSULTA SEM LINHA AMARELA */
+    /* BARRA DE CONSULTA */
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 1px solid #1c437a; padding: 12px 0; z-index: 100; }
     .nav-title { font-size: 11px; text-align: center; color: #4da6ff; margin-bottom: 8px; font-weight: bold; letter-spacing: 1px; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 15px; gap: 8px; }
     .nav-item { flex: 0 0 40px; height: 40px; background: #132b52; border: 1px solid #4da6ff; border-radius: 4px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 14px; color: white; }
 
     /* MODAL */
-    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 450px; background: white; color: black; padding: 20px; border-radius: 10px; z-index: 200; box-shadow: 0 0 20px rgba(0,0,0,0.6); }
+    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 450px; background: white; color: black; padding: 20px; border-radius: 10px; z-index: 200; }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 150; }
 </style>
 </head>
@@ -65,7 +70,7 @@
 </div>
 
 <div class="footer-nav">
-    <div class="nav-title">CONSULTA RÁPIDA (USE O NÚMERO INDICADO NA QUESTÃO)</div>
+    <div class="nav-title">CONSULTA RÁPIDA (USE O NÚMERO DA QUESTÃO)</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
@@ -80,7 +85,6 @@
 
 <script>
 const questions = [
-    // As questões agora possuem um ID interno (origId) para bater com o carrossel
     {id:1, q:"Documento para registro de dependentes junto à DPMM e CPesFN?", a:["Declaração de Dependente (DD)","Ficha de Cadastro","RBI","Averbação"], correct:0, type:"mc"},
     {id:2, q:"Órgão Setorial que contribui para o preparo do Poder Naval em economia e finanças:", a:["Secretaria-Geral da Marinha (SGM)","EMA","DPC","CGCFN"], correct:0, type:"mc"},
     {id:3, q:"Deveres específicos de todas as Praças da Marinha:", answer:"a) Cumprir instruções; b) Tomar parte nas mostras, fainas e exercícios; c) Desempenhar tarefas determinadas; d) Participar de cultura física.", type:"text"},
@@ -142,9 +146,9 @@ function createNavBar() {
 
 function openModal(idx) {
     const q = questions[idx];
-    document.getElementById("modal-title").innerText = "Consulta - Questão " + q.id;
+    document.getElementById("modal-title").innerText = "Gabarito - Questão " + q.id;
     let resp = q.type === "mc" ? q.a[q.correct] : q.answer;
-    document.getElementById("modal-body").innerHTML = `<strong>Pergunta:</strong><p>${q.q}</p><hr><strong>Resposta Oficial:</strong><p style="color: #0b1e3d; font-weight:bold; background: #f0f0f0; padding: 10px; border-radius:5px;">${resp}</p>`;
+    document.getElementById("modal-body").innerHTML = `<strong>Pergunta:</strong><p>${q.q}</p><hr><strong>Resposta Oficial:</strong><p style="color: #0b1e3d; font-weight:bold; background: #ffcc00; padding: 10px; border-radius:5px;">${resp}</p>`;
     document.getElementById("modal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
 }
@@ -163,14 +167,11 @@ function start(){
 
 function show(){
     document.getElementById("nextBtn").style.display="none";
-    document.getElementById("result").innerText="";
     document.getElementById("feedback").innerHTML="";
     document.getElementById("progress").innerText="Questão "+(current+1)+" de "+shuffled.length;
     let q=shuffled[current];
     
-    // EXIBE O NÚMERO DA CONSULTA NO ENUNCIADO
     document.getElementById("question").innerText = `Questão [${q.id}] - ${q.q}`;
-    
     document.getElementById("options").innerHTML="";
     document.getElementById("discursive").innerHTML="";
 
@@ -189,10 +190,10 @@ function show(){
             document.getElementById("options").appendChild(d);
         });
     } else {
-        let inp = document.createElement("input"); inp.id="userInp"; inp.placeholder="Digite sua resposta e compare...";
-        let b = document.createElement("button"); b.innerText="Ver Resposta Oficial";
+        let inp = document.createElement("input"); inp.id="userInp"; inp.placeholder="Sua resposta...";
+        let b = document.createElement("button"); b.innerText="Conferir Resposta";
         b.onclick=() => {
-            document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>Resposta do PDF:</strong><br><span style="color:#4da6ff; font-weight:bold;">${q.answer}</span></div>`;
+            document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>Resposta do PDF:</strong><br><span class="res-oficial">${q.answer}</span></div>`;
             document.getElementById("nextBtn").style.display="inline-block";
         };
         document.getElementById("discursive").appendChild(inp); document.getElementById("discursive").appendChild(b);
@@ -202,7 +203,7 @@ function show(){
 function nextQuestion(){ current++; if(current < shuffled.length) show(); else finish(); }
 
 function finish(){
-    document.getElementById("mainBox").innerHTML = `<h2>Simulado Concluído!</h2><p>Acertos nas questões objetivas: ${score}</p><button onclick="location.reload()">Reiniciar</button>`;
+    document.getElementById("mainBox").innerHTML = `<h2>Simulado Concluído!</h2><p>Acertos Objetivos: ${score}</p><button onclick="location.reload()">Reiniciar</button>`;
 }
 
 start();
