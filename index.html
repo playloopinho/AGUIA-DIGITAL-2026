@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Simulado Oficial - Administração Naval</title>
 <style>
-    /* FUNDO AZUL NAVAL ÚNICO */
-    body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 100px; overflow-x: hidden; }
+    body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 110px; }
     
-    /* BANNER AJUSTADO PARA MOBILE (MENOR PARA NÃO OCUPAR A TELA TODA) */
     .header-banner {
         width: 100%;
-        height: 120px; /* Reduzido de 180px */
+        height: 110px;
         background-color: #0b1e3d;
         background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png'); 
         background-size: contain;
@@ -22,8 +20,6 @@
     }
 
     .container { display:flex; justify-content:center; padding: 5px; }
-    
-    /* CAIXA DE CONTEÚDO OTIMIZADA */
     .box { background:#132b52; padding:15px; border-radius:12px; width:95%; max-width:800px; text-align:center; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border: 1px solid #1c437a; }
     
     .option { background:#4da6ff; color:black; padding:10px; margin:8px 0; border-radius:8px; cursor:pointer; font-weight:bold; text-align: left; font-size: 14px; }
@@ -31,13 +27,11 @@
     .wrong { background:red !important; color:white; }
     
     input { width:90%; padding:10px; margin-top:10px; border-radius: 5px; border: 2px solid #4da6ff; background: #0b1e3d; color: white; }
-    
     button { margin-top:10px; padding:10px 20px; border:none; border-radius:5px; cursor:pointer; background: #ffcc00; color: #0b1e3d; font-weight: bold; text-transform: uppercase; }
 
     #feedback-area { background: #071426; padding: 12px; margin-top: 10px; border-left: 5px solid #ffcc00; text-align: left; font-size: 13px; }
     .res-oficial { color: #ffcc00; font-weight: bold; }
 
-    /* BARRA DE CONSULTA */
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 1px solid #1c437a; padding: 8px 0; z-index: 100; }
     .nav-title { font-size: 10px; text-align: center; color: #4da6ff; margin-bottom: 5px; font-weight: bold; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 10px; gap: 5px; }
@@ -58,12 +52,12 @@
         <div id="options"></div>
         <div id="discursive"></div>
         <div id="feedback"></div>
-        <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Próxima</button>
+        <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Próxima Questão</button>
     </div>
 </div>
 
 <div class="footer-nav">
-    <div class="nav-title">CONSULTA RÁPIDA (REF. PDF)</div>
+    <div class="nav-title">CENTRAL DE CONSULTA (NÚMERO DA QUESTÃO NO PDF)</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
@@ -77,51 +71,38 @@
 </div>
 
 <script>
-[span_2](start_span)[span_3](start_span)// Questões transcritas fielmente conforme os PDFs[span_2](end_span)[span_3](end_span)
+// Questões transcritas fielmente conforme os PDFs ADM NAVAL e Questionário
 const questions = [
-    [span_4](start_span){id:1, q:"01-São deveres específicos de todas as Praças da Marinha, EXCETO?", a:["Cumprir as instruções que tiverem para o serviço[span_4](end_span)[span_5](start_span)","Executar as tarefas necessárias à manutenção e operação dos equipamentos e à conservação de compartimentos de suas OM[span_5](end_span)[span_6](start_span)","Tomar parte nas mostras, fainas e exercícios[span_6](end_span)[span_7](start_span)","Desempenhar em serviço as tarefas que lhes forem determinadas[span_7](end_span)[span_8](start_span)","Participar dos exercícios de cultura física e desportos[span_8](end_span)"], correct:1, type:"mc"},
-    [span_9](start_span){id:2, q:"02-Qual das alternativas abaixo não é considerada uma Licença?", a:["Licença para acompanhar conjuge ou companheiro(a) (LAC)","Licença à adotante (LA)","Licença para tratamento de saúde de pessoa da família (LTSPF)[span_9](end_span)[span_10](start_span)","Licença para frequentar curso de formação pessoal (LECEP)[span_10](end_span)[span_11](start_span)","Licença paternidade (LP)[span_11](end_span)"], correct:3, type:"mc"},
-    [span_12](start_span){id:3, q:"03-Qual é o documento utilizado para registro de dependentes junto à DPMM e ao CPesFN?", answer:"Declaração de Dependente (DD)[span_12](end_span).", type:"text"},
-    [span_13](start_span){id:4, q:"04-Qual das alternativas abaixo é uma circunstância atenuante da contravenção disciplinar?", a:["Tratamento com rigor não autorizado","Cometida estando em risco a segurança da OM","Legitima defesa","Força maior ou caso fortuito","Prestação anterior de serviços relevantes já reconhecidos[span_13](end_span)"], correct:4, type:"mc"},
-    [span_14](start_span){id:5, q:"05-Qual da alternativa abaixo não é um Requisito Básico para a Matricula em Curso?", a:["Estar apta em inspeção de saúde[span_14](end_span)[span_15](start_span)","Ter nota de AMS igual ou superior a sete (7,00)[span_15](end_span)[span_16](start_span)","Ter sido selecionada para o curso ou estágio[span_16](end_span)[span_17](start_span)","Ter sido aprovada no último JAE anual[span_17](end_span)[span_18](start_span)","Estar definitivamente impedida de acesso[span_18](end_span)"], correct:4, type:"mc"},
-    [span_19](start_span){id:6, q:"06-Qual das Hipóteses não caracteriza como Crime de Deserção?", a:["Ausentar-se por mais de oito dias[span_19](end_span)[span_20](start_span)","Tendo cumprido pena, deixar de se apresentar dentro de 8 dias[span_20](end_span)[span_21](start_span)","Não se apresentar no lugar designado, findo o prazo de trânsito ou férias[span_21](end_span)[span_22](start_span)","Deixar de se apresentar no prazo de 8 dias após licença cassada[span_22](end_span)[span_23](start_span)","Evadir-se do poder de escolta ou prisão[span_23](end_span)"], correct:2, type:"mc"},
-    [span_24](start_span)[span_25](start_span){id:7, q:"07-Procedimento administrativo sumário com objetivo de mera apuração preliminar?", answer:"Sindicância[span_24](end_span)[span_25](end_span).", type:"text"},
-    [span_26](start_span)[span_27](start_span){id:8, q:"08-Qual Órgão é um Órgão de Assistência direta e imediata do Ministério da Defesa?", answer:"Assessoria Especial Militar[span_26](end_span)[span_27](end_span).", type:"text"},
-    [span_28](start_span)[span_29](start_span){id:9, q:"09-Estágio realizado pelas Praças após cursos, com duração de um ano?", answer:"Estágio de Aplicação[span_28](end_span)[span_29](end_span).", type:"text"},
-    [span_30](start_span)[span_31](start_span){id:10, q:"10-A quem caberá a designação do Escrivão, caso não tenha sido efetuada pela autoridade nomeante?", answer:"Encarregado da Sindicância[span_30](end_span)[span_31](end_span).", type:"text"},
-    [span_32](start_span)[span_33](start_span){id:11, q:"11-Na Sindicância, em quais termos serão ouvidos, respectivamente, o ofendido e as testemunhas?", answer:"Termo de Declarações e Termo de Depoimento[span_32](end_span)[span_33](end_span).", type:"text"},
-    [span_34](start_span)[span_35](start_span){id:12, q:"12-Promoção que resulta de atos incomuns de coragem e audácia?", answer:"Promoção por bravura[span_34](end_span)[span_35](end_span).", type:"text"},
-    [span_36](start_span)[span_37](start_span){id:13, q:"13-Reconhecimento da Pátria à praça falecida no cumprimento do dever?", answer:"Promoção 'post-mortem'[span_36](end_span)[span_37](end_span).", type:"text"},
-    [span_38](start_span)[span_39](start_span){id:14, q:"14-Conceitue Contravenção Disciplinar.", answer:"Ação ou omissão contrária às obrigações ou deveres militares que não constitua crime[span_38](end_span)[span_39](end_span).", type:"text"},
-    [span_40](start_span)[span_41](start_span){id:15, q:"15-Procedimento para apuração de crimes militares (Art. 9º CPM)?", answer:"Inquérito Policial Militar (IPM)[span_40](end_span)[span_41](end_span).", type:"text"},
-    [span_42](start_span)[span_43](start_span){id:16, q:"16-Como os compromissos de tempo de serviço são classificados?", answer:"Inicial; prorrogações; e cursos ou estágios[span_42](end_span)[span_43](end_span).", type:"text"},
-    [span_44](start_span)[span_45](start_span){id:17, q:"17-Qual o termo inicial da Sindicância subscrito pelo escrivão?", answer:"Autuação[span_44](end_span)[span_45](end_span).", type:"text"},
-    [span_46](start_span){id:18, q:"18-Qual dia será lavrada a Parte de Deserção para ausência iniciada em 05/03/2024?", answer:"15 de março de 2024[span_46](end_span).", type:"text"},
-    [span_47](start_span)[span_48](start_span){id:19, q:"19-Qual a missão principal no serviço de guarda a presos?", answer:"Mantê-lo sob controle e custódia[span_47](end_span)[span_48](end_span).", type:"text"},
-    [span_49](start_span){id:20, q:"20-Órgão que contribui no preparo do Poder Naval em economia e finanças?", answer:"Secretaria-Geral da Marinha (SGM)[span_49](end_span).", type:"text"},
-    [span_50](start_span){id:21, q:"21-Termo que registra a anexação de documento que interesse à prova?", answer:"Juntada[span_50](end_span).", type:"text"},
-    [span_51](start_span){id:22, q:"22-Documento de compromisso de sigilo do escrivão?", answer:"Termo de Compromisso[span_51](end_span).", type:"text"},
-    [span_52](start_span){id:23, q:"23-Proibição da Bandeira Nacional: Usar em mau estado?", answer:"Sim, é proibido usar Bandeira que não esteja em bom estado[span_52](end_span).", type:"text"},
-    [span_53](start_span){id:24, q:"24-Proibição da Bandeira Nacional: Usar como revestimento de tribuna?", answer:"Sim, é proibido[span_53](end_span).", type:"text"},
-    [span_54](start_span){id:25, q:"25-Proibição da Bandeira Nacional: Abater em continência?", answer:"Sim, é proibido[span_54](end_span).", type:"text"},
-    [span_55](start_span)[span_56](start_span){id:26, q:"26-Promoção baseada na precedência hierárquica?", answer:"Promoção por antiguidade[span_55](end_span)[span_56](end_span).", type:"text"},
-    [span_57](start_span)[span_58](start_span){id:27, q:"27-Promoção baseada no conjunto de atributos que realçam o valor da praça?", answer:"Promoção por merecimento[span_57](end_span)[span_58](end_span).", type:"text"},
-    [span_59](start_span)[span_60](start_span){id:28, q:"28-Promoção após reconhecido o direito à praça preterida?", answer:"Promoção em ressarcimento de preterição[span_59](end_span)[span_60](end_span).", type:"text"},
-    [span_61](start_span)[span_62](start_span){id:29, q:"29-Escolta: Quando se deve tocar no preso?", answer:"Legítima defesa, evitar fuga, ferimentos ou dano à propriedade[span_61](end_span)[span_62](end_span).", type:"text"},
-    [span_63](start_span){id:30, q:"30-Onde o escrivão ad hoc é designado na falta de militares?", answer:"Qualquer pessoa idônea[span_63](end_span).", type:"text"},
-    [span_64](start_span){id:31, q:"31-Atenuante: Idade menor de?", answer:"18 anos[span_64](end_span).", type:"text"},
-    [span_65](start_span){id:32, q:"32-Atenuante: Tempo de serviço menor de?", answer:"Seis meses[span_65](end_span).", type:"text"},
-    [span_66](start_span)[span_67](start_span){id:33, q:"33-Dever: Participar dos exercícios de cultura física?", answer:"Sim, é dever específico das Praças[span_66](end_span)[span_67](end_span).", type:"text"},
-    [span_68](start_span)[span_69](start_span){id:34, q:"34-Licença: LTSPF significa o quê?", answer:"Licença para tratamento de saúde de pessoa da família[span_68](end_span)[span_69](end_span).", type:"text"},
-    [span_70](start_span)[span_71](start_span){id:35, q:"35-Deserção: Prazo de ausência para caracterizar crime?", answer:"Mais de oito dias[span_70](end_span)[span_71](end_span).", type:"text"},
-    [span_72](start_span){id:36, q:"36-Quem é ouvido em Termo de Inquirição?", answer:"O sindicado[span_72](end_span).", type:"text"},
-    [span_73](start_span)[span_74](start_span){id:37, q:"37-Qual Órgão cuida da direção superior das Forças Armadas?", answer:"Ministério da Defesa[span_73](end_span)[span_74](end_span).", type:"text"},
-    [span_75](start_span)[span_76](start_span){id:38, q:"38-Dever: Tomar parte nas mostras e fainas?", answer:"Sim, conforme posto designado[span_75](end_span)[span_76](end_span).", type:"text"},
-    [span_77](start_span){id:39, q:"39-O que o SP evita ao observar o preso no tribunal?", answer:"Que ele se fira ou fira outrem[span_77](end_span).", type:"text"},
-    [span_78](start_span){id:40, q:"40-Pode colocar emblemas sobre a Bandeira?", answer:"Não, é proibido[span_78](end_span).", type:"text"},
-    [span_79](start_span)[span_80](start_span){id:41, q:"41-Dever: Executar tarefas de manutenção?", answer:"Sim, dever específico das Praças[span_79](end_span)[span_80](end_span).", type:"text"},
-    [span_81](start_span){id:42, q:"42-Sindicância: O que precede a anexação de papéis?", answer:"Prévio despacho do encarregado[span_81](end_span).", type:"text"},
-    [span_82](start_span){id:43, q:"43-Sindicância: Nome da função do escrivão na falta de oficiais/sargentos?", answer:"Escrivão ad hoc[span_82](end_span).", type:"text"}
+    {id:1, q:"01-São deveres específicos de todas as Praças da Marinha, EXCETO?", a:["Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executa-das por seus subordinados.","Executar as tarefas necessárias à manutenção e operação dos equipamentos e à conservação de compar-timentos de suas OM.","Tomar parte nas mostras, fainas e exercícios, ocupando para isto o posto que les for designado.","Desempenhar em serviço, no porto ou em viagem, as tarefas que lhes forem determinadas.","Participar dos exercícios de cultura física e desportos."], correct:1, type:"mc"},
+    {id:2, q:"02-Qual das alternativas abaixo não é considerada uma Licença?", a:["Licença para acompanhar conjuge ou companheiro(a) (LAC).","Licença à adotante (LA).","Licença para tratamento de saúde de pessoa da família (LTSPE).","Licença para frequentar curso de formação pessoal (LECEP).","Licença paternidade (LP)."], correct:3, type:"mc"},
+    {id:3, q:"03-Qual é o documento utilizado para registro de dependentes junto à DPMM e ao CPesFN?", answer:"Declaração de Dependente (DD).", type:"text"},
+    {id:4, q:"04-Qual das alternativas abaixo é uma circunstância atenuante da contravenção disciplinar?", a:["Tratamento em serviço ordinário com rigor não autorizado pelos regulamentos militares.","Ter sido cometida estando em risco a segurança da Organização Militar.","legitima defesa, própria ou de outrem.","Força maior ou caso fortuito plenamente comprovado.","Prestação anterior de serviços relevantes não reconhecidos."], correct:0, type:"mc"},
+    {id:5, q:"05-Qual da alternativa abaixo não é um Requisito Básico para a Matricula em Curso?", a:["Estar apta em inspeção de saúde.","Ter nota de AMS igual ou superior a sete (7,00).","Ter sido selecionada para o curso ou estágio.","Ter sido aprovada no último JAE anual.","Estar definitivamente impedida de acesso, de acordo com o estabelecido no RPPM."], correct:4, type:"mc"},
+    {id:6, q:"06-Qual das Hipóteses não caracteriza como Crime de Deserção?", a:["Ausentar-se da unidade por mais de oito dias.","Tendo cumprido pena, deixar de se apresentar dentro do prazo de oito dias.","Não se apresentar no lugar designado, findo o prazo de trânsito ou férias.","Deixar de se apresentar à autoridade competente dentro do prazo de 8 dias após licença cassada.","Evadir-se do poder de escolta ou de recinto de prisão ou detenção."], correct:2, type:"mc"},
+    {id:7, q:"07-Procedimento administrativo sumário com objetivo de mera apuração preliminar?", answer:"Sindicância.", type:"text"},
+    {id:8, q:"08-Qual Órgão é um Órgão de Assistência direta e imediata do Ministério da Defesa?", answer:"Assessoria Especial Militar.", type:"text"},
+    {id:9, q:"09-Estágio realizado pelas Praças após os cursos, com duração de um ano?", answer:"Estágio de Aplicação.", type:"text"},
+    {id:10, q:"10-A quem caberá a designação do Escrivão, caso não tenha sido efetuada pela autoridade nomeante?", answer:"Encarregado da Sindicância.", type:"text"},
+    {id:11, q:"11-Na Sindicância, em quais termos serão ouvidos, respectivamente, o ofendido, o sindicado e as testemunhas?", answer:"Termo de Declaração, Termo de Inquirição e Termo de Depoimento.", type:"text"},
+    {id:12, q:"12-Promoção que resulta de ato ou atos incomuns, de coragem e audácia?", answer:"Promoção por bravura.", type:"text"},
+    {id:13, q:"13-Reconhecimento da Pátria à praça falecida no cumprimento do dever?", answer:"Promoção 'post-mortem'.", type:"text"},
+    {id:14, q:"14-Conceitue Contravenção Disciplinar.", answer:"É toda ação ou omissão contrária às obrigações ou aos deveres militares estatuídos nas leis, nos regulamentos, nas normas e nas disposições em vigor que fundamentam a Organização Militar, desde que não incidindo no que é capitulado pelo Código Penal Militar como crime.", type:"text"},
+    {id:15, q:"15-Procedimento para apuração de crimes militares (Art. 9º CPM)?", answer:"Inquérito Policial Militar (IPM).", type:"text"},
+    {id:16, q:"16-Como os compromissos de tempo de serviço são classificados?", answer:"Compromisso inicial; compromissos decorrentes das prorrogações do tempo de serviço; e compromissos de cursos ou estágios.", type:"text"},
+    {id:17, q:"17-Qual o termo inicial da Sindicância subscrito pelo escrivão?", answer:"Autuação.", type:"text"},
+    {id:18, q:"18-Qual dia (data) será lavrada a Parte de Deserção para ausência iniciada em 05/03/2024?", answer:"15 de março de 2024.", type:"text"},
+    {id:19, q:"19-Qual a missão principal no serviço de guarda a presos?", answer:"Mantê-lo sob controle e custódia, e executar suas missões de acordo com as ordens e regulamentos militares.", type:"text"},
+    {id:20, q:"20-Órgão que contribui no preparo do Poder Naval em economia e finanças?", answer:"Secretaria-Geral da Marinha (SGM).", type:"text"},
+    {id:21, q:"21-Termo que registra a anexação de documento ou papel que interesse à prova?", answer:"Juntada.", type:"text"},
+    {id:22, q:"22-Documento pelo qual o escrivão prestará compromisso legal de sigilo?", answer:"Termo de Compromisso.", type:"text"},
+    {id:23, q:"23-Quais as proibições quanto ao uso da bandeira nacional?", answer:"I-Fazer saudação; II-Usar em mau estado; III-Usar como reposteiro, pano de boca ou revestimento; IV-Uso para honras particulares; V-Colocar emblemas sobre ela; VI-Abater em continência.", type:"text"},
+    {id:24, q:"24-Onde os integrantes do SP poderão ser designados para cumprir missões?", answer:"Guarda a presos militares no tribunal, instalações da prisão, locais de trabalho, deslocamentos ou instalações militares.", type:"text"},
+    {id:25, q:"25-Na Sindicância, como é denominada a função do escrivão na falta de oficiais ou sargentos?", answer:"Escrivão ad hoc.", type:"text"},
+    {id:26, q:"26-Promoção baseada na precedência hierárquica?", answer:"Promoção por antiguidade.", type:"text"},
+    {id:27, q:"27-Promoção baseada no conjunto de qualidades e atributos que distinguem a praça?", answer:"Promoção por merecimento.", type:"text"},
+    {id:28, q:"28-Promoção feita após reconhecido o direito à praça preterida?", answer:"Promoção em ressarcimento de preterição.", type:"text"},
+    {id:29, q:"29-Circunstâncias atenuantes da contravenção disciplinar?", answer:"Bons antecedentes; Idade menor de 18; Tempo serviço menor de 6 meses; Serviços relevantes reconhecidos; Rigor não autorizado; Provocação.", type:"text"},
+    {id:30, q:"30-Quando se deve tocar no preso durante a escolta?", answer:"Legítima defesa, evitar fuga, ferimentos em terceiros ou danificação de propriedade.", type:"text"}
 ];
 
 let shuffled=[]; let current=0;
@@ -140,9 +121,9 @@ function createNavBar() {
 
 function openModal(idx) {
     const q = questions[idx];
-    document.getElementById("modal-title").innerText = "Ref. Gabarito [" + q.id + "]";
+    document.getElementById("modal-title").innerText = "Gabarito Oficial [" + q.id + "]";
     let resp = q.type === "mc" ? q.a[q.correct] : q.answer;
-    document.getElementById("modal-body").innerHTML = `<strong>${q.q}</strong><hr><span style="color: #0b1e3d; font-weight:bold; background: #ffcc00; padding: 5px; border-radius:3px;">${resp}</span>`;
+    document.getElementById("modal-body").innerHTML = `<strong>${q.q}</strong><hr><span class="res-oficial">${resp}</span>`;
     document.getElementById("modal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
 }
@@ -168,17 +149,18 @@ function show(){
         q.a.forEach(opt => {
             let d = document.createElement("div"); d.className="option"; d.innerText=opt;
             d.onclick=() => {
+                document.querySelectorAll(".option").forEach(o=>o.onclick=null);
                 if(opt === q.a[q.correct]) d.classList.add("correct");
-                else d.classList.add("wrong");
+                else { d.classList.add("wrong"); document.querySelectorAll(".option").forEach(o=>{if(o.innerText===q.a[q.correct])o.classList.add("correct")}); }
                 document.getElementById("nextBtn").style.display="inline-block";
             };
             document.getElementById("options").appendChild(d);
         });
     } else {
         let inp = document.createElement("input"); inp.placeholder="Sua resposta...";
-        let b = document.createElement("button"); b.innerText="Ver Gabarito";
+        let b = document.createElement("button"); b.innerText="Conferir no PDF";
         b.onclick=() => {
-            document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>Gabarito:</strong><br><span class="res-oficial">${q.answer}</span></div>`;
+            document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>Resposta Literal do PDF:</strong><br><span class="res-oficial">${q.answer}</span></div>`;
             document.getElementById("nextBtn").style.display="inline-block";
         };
         document.getElementById("discursive").appendChild(inp); document.getElementById("discursive").appendChild(b);
