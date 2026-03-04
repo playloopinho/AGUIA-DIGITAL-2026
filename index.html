@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulado Naval - 43 Questões</title>
+<title>Simulado Naval - 43 Questões (Modo Revisão)</title>
 <style>
     body{ font-family: 'Segoe UI', sans-serif; background:#0b1e3d; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; color:white; }
     .container{ width:95%; max-width:850px; text-align:center; padding: 20px; }
@@ -12,10 +12,11 @@
     .option:hover { background: #80bfff; }
     .correct{background:green !important;color:white;}
     .wrong{background:red !important;color:white;}
-    input{ width:90%; padding:12px; margin-top:15px; border-radius: 5px; border: 2px solid #4da6ff; background: #0b1e3d; color: white; }
+    input{ width:90%; padding:12px; margin-top:15px; border-radius: 5px; border: 2px solid #4da6ff; background: #0b1e3d; color: white; font-size: 16px;}
     button{ margin-top:20px; padding:12px 25px; border:none; border-radius:5px; cursor:pointer; background: #ffcc00; color: #0b1e3d; font-weight: bold; }
-    #result { margin-top: 20px; }
+    #result { margin-top: 20px; font-weight: bold; padding: 10px; border-radius: 5px; }
     #progress { margin-bottom: 20px; color: #a0c4ff; }
+    .feedback-box { background: #1a3a6d; padding: 15px; margin-top: 15px; border-left: 5px solid #ffcc00; text-align: left; }
 </style>
 </head>
 <body>
@@ -25,102 +26,121 @@
         <h3 id="question"></h3>
         <div id="options"></div>
         <div id="discursive"></div>
-        <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Próxima</button>
+        <div id="feedback"></div>
+        <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Próxima Questão</button>
         <h3 id="result"></h3>
     </div>
 </div>
 
 <script>
 const questions = [
-    /* --- QUESTIONÁRIO 01 (26 Questões) --- */
+    // --- QUESTIONÁRIO 1 (26 questões adaptadas) ---
     {type:"mc", q:"Documento para registro de dependentes junto à DPMM e CPesFN?", a:["Declaração de Dependente (DD)","Portaria","Ficha","Termo"], correct:0},
-    {type:"mc", q:"Órgão que contribui para o preparo do Poder Naval em economia e administração?", a:["Secretaria-Geral da Marinha (SGM)","EMA","CGCFN","DPC"], correct:0},
-    {type:"mc", q:"Dever específico: Cumprir as instruções que tiverem para o serviço e...", a:["fazer com que sejam bem executadas por subordinados","ignorar ordens verbais","questionar superiores","apenas observar"], correct:0},
-    {type:"mc", q:"Circunstância atenuante: Bons antecedentes militares e...", a:["Idade menor de 18 anos","Reincidência","Crime","Deserção"], correct:0},
-    {type:"mc", q:"Circunstância atenuante: Tempo de serviço militar menor de...", a:["seis meses","um ano","dois anos","três meses"], correct:0},
-    {type:"mc", q:"Qual licença permite acompanhar cônjuge ou companheiro(a)?", a:["LAC","LA","LTSPF","LP"], correct:0},
-    {type:"text", q:"Promoção baseada no conjunto de qualidades e atributos que distinguem a praça:", answer:"promoção por merecimento"},
-    {type:"text", q:"Procedimento administrativo sumário para apuração de ocorrências anômalas:", answer:"sindicância"},
-    {type:"mc", q:"Órgão de assistência direta e imediata do Ministério da Defesa?", a:["Assessoria Especial Militar","HFA","ESG","Calha Norte"], correct:0},
-    {type:"text", q:"Estágio após C-Espc, C-Subespc, etc, com duração de um ano:", answer:"estágio de aplicação"},
-    {type:"text", q:"A quem cabe a designação do Escrivão, caso não feita pela autoridade nomeante?", answer:"encarregado da sindicância"},
-    {type:"text", q:"Em qual termo o sindicado é ouvido?", answer:"termo de inquirição"},
-    {type:"text", q:"Promoção por atos incomuns de coragem e audácia:", answer:"promoção por bravura"},
-    {type:"text", q:"Promoção que expressa reconhecimento à praça falecida no dever:", answer:"promoção post-mortem"},
-    {type:"mc", q:"Hipótese de deserção: ausentar-se por mais de...", a:["oito dias","cinco dias","dez dias","quinze dias"], correct:0},
-    {type:"mc", q:"Deserção especial: deixar de apresentar-se no momento da partida de...", a:["navio ou aeronave","viatura","formatura","refeição"], correct:0},
-    {type:"text", q:"Promoção baseada na precedência hierárquica dentro do mesmo Corpo:", answer:"promoção por antiguidade"},
-    {type:"text", q:"Promoção após reconhecido à praça preterida o direito que lhe caberia:", answer:"promoção em ressarcimento de preterição"},
-    {type:"text", q:"Não se deve tocar no preso exceto em caso de:", answer:"legítima defesa"},
-    {type:"text", q:"Onde o SP pode cumprir missões de guarda a presos?", answer:"tribunal, prisões ou instalações militares"},
-    {type:"text", q:"Missão principal da guarda a presos:", answer:"mantê-lo sob controle e custódia"},
-    {type:"text", q:"Conceitue Contravenção Disciplinar.", answer:"ação ou omissão contrária aos deveres militares que não seja crime"},
-    {type:"text", q:"Procedimento para apuração de crimes militares (Art. 9º CPM):", answer:"inquérito policial militar"},
-    {type:"text", q:"Classificação dos compromissos: inicial, prorrogações e...", answer:"compromissos de cursos ou estágios"},
-    {type:"mc", q:"É proibido usar Bandeira Nacional como reposteiro, pano de boca ou...", a:["revestimento de tribuna","símbolo","galhardete","insígnia"], correct:0},
-    {type:"text", q:"Termo inicial da Sindicância subscrito pelo escrivão:", answer:"autuação"},
+    {type:"mc", q:"Órgão de Direção Setorial que contribui para o preparo do Poder Naval em economia e administração?", a:["Secretaria-Geral da Marinha (SGM)","EMA","CGCFN","DPC"], correct:0},
+    {type:"text", q:"Cite os deveres específicos de todas as Praças da Marinha.", answer:"a) Cumprir instruções; b) Tomar parte nas mostras, fainas e exercícios; c) Desempenhar tarefas determinadas; d) Participar de cultura física."},
+    {type:"text", q:"Quais as circunstâncias atenuantes da contravenção disciplinar?", answer:"Bons antecedentes; Idade < 18 anos; Tempo serviço < 6 meses; Serviços relevantes; Rigor não autorizado; Provocação."},
+    {type:"mc", q:"A quem o Sindicado é ouvido na Sindicância?", a:["Termo de Inquirição","Termo de Depoimento","Termo de Declaração","Autuação"], correct:0},
+    {type:"text", q:"Conceitue Contravenção Disciplinar.", answer:"Ação ou omissão contrária às obrigações ou deveres militares que não constitua crime."},
+    {type:"text", q:"O que é o Inquérito Policial Militar (IPM)?", answer:"Procedimento administrativo para apuração de fatos que possam constituir crimes militares e suas autorias."},
+    {type:"text", q:"Como são classificados os compromissos de tempo de serviço?", answer:"Compromisso inicial; compromissos de prorrogações; e compromissos de cursos ou estágios."},
+    {type:"mc", q:"Qual o termo inicial da Sindicância?", a:["Autuação","Juntada","Relatório","Capa"], correct:0},
+    {type:"mc", q:"Qual o termo que registra a anexação de papéis à Sindicância?", a:["Juntada","Autuação","Despacho","Anexo"], correct:0},
+    {type:"text", q:"O que o escrivão promete no Termo de Compromisso?", answer:"Manter os autos em sigilo e cumprir fielmente as normas."},
+    {type:"text", q:"Qual a finalidade da Sindicância?", answer:"Apuração sumária de irregularidades ou atos que exijam esclarecimento para fins disciplinares ou administrativos."},
+    {type:"text", q:"Quais as formas de promoção para as Praças?", answer:"Antiguidade, Merecimento, Bravura, Post-mortem e Ressarcimento de Preterição."},
+    {type:"text", q:"Defina Promoção por Merecimento.", answer:"Baseada no conjunto de qualidades e atributos que distinguem o valor da praça."},
+    {type:"text", q:"Defina Promoção por Antiguidade.", answer:"Baseada na precedência hierárquica de uma praça sobre as demais de igual graduação."},
+    {type:"text", q:"O que é Promoção por Bravura?", answer:"Resulta de ato de coragem e audácia incomuns que ultrapassam os limites normais do cumprimento do dever."},
+    {type:"text", q:"O que é Promoção Post-Mortem?", answer:"Visa expressar o reconhecimento da Pátria à praça falecida no cumprimento do dever ou em consequência dele."},
+    {type:"text", q:"O que é Promoção em Ressarcimento de Preterição?", answer:"Efetivada após reconhecido à praça o direito à promoção que lhe caberia."},
+    {type:"mc", q:"Qual o prazo de ausência para ser considerado crime de Deserção?", a:["Mais de 8 dias","Mais de 5 dias","Mais de 10 dias","24 horas"], correct:0},
+    {type:"text", q:"Em qual data será lavrada a Parte de Deserção se a ausência iniciou dia 05/03/24?", answer:"15 de março de 2024."},
+    {type:"text", q:"Qual a missão principal do serviço de guarda a presos?", answer:"Mantê-lo sob controle e custódia."},
+    {type:"text", q:"Como deve ser a conduta da escolta ao entrar em prédios?", answer:"O escolta deve entrar à frente, mantendo o controle da situação."},
+    {type:"mc", q:"Na audiência, onde o escolta deve posicionar-se?", a:["À esquerda e um pouco atrás do preso","À frente do preso","Longe do preso","Sentado ao lado"], correct:0},
+    {type:"text", q:"Quais as proibições quanto ao uso da Bandeira Nacional?", answer:"Não usar como reposteiro, pano de boca, guarnição de mesa, revestimento de tribuna ou se estiver em mau estado."},
+    {type:"mc", q:"Qual a idade considerada atenuante na contravenção?", a:["Menor de 18 anos","Menor de 21 anos","Menor de 16 anos","Qualquer idade"], correct:0},
+    {type:"mc", q:"Quem designa o escrivão ad hoc na falta de oficial ou sargento?", a:["Encarregado","Comandante","Ministro","Juiz"], correct:0},
 
-    /* --- DOCUMENTO ADM NAVAL (17 Questões) --- */
-    {type:"mc", q:"São deveres de todas as Praças, EXCETO (Doc 2):", a:["Participar dos exercícios de cultura física","Cumprir instruções","Executar manutenção","Fazer mostras"], correct:0},
-    {type:"mc", q:"Qual NÃO é considerada Licença (Doc 2)?", a:["LECEP","LA","LAC","LTSPF"], correct:0},
-    {type:"mc", q:"Documento para registro de dependentes (Doc 2):", a:["Declaração de Dependente (DD)","RBA","RBI","DBA"], correct:0},
-    {type:"mc", q:"Circunstância atenuante: Prestação anterior de serviços...", a:["relevantes não reconhecidos","obrigatórios","comuns","irrelevantes"], correct:4},
-    {type:"mc", q:"Requisito básico para matrícula: Estar apta em...", a:["inspeção de saúde","teste físico","tiro","natação"], correct:0},
-    {type:"mc", q:"Não caracteriza crime de deserção (Doc 2):", a:["Evadir-se da escolta por 2 dias","Ausentar-se por 9 dias","Faltar após férias","Faltar após licença"], correct:0},
-    {type:"text", q:"O ofendido na sindicância é ouvido em:", answer:"termo de inquirição"},
-    {type:"text", q:"Escrivão designado na falta de militares é o:", answer:"escrivão ad hoc"},
-    {type:"text", q:"Promoção por Merecimento baseia-se no conjunto de:", answer:"qualidades e atributos"},
-    {type:"text", q:"Promoção por Antiguidade baseia-se na:", answer:"precedência hierárquica"},
-    {type:"mc", q:"Conduta da escolta: o SP ficará em qual posição ao entrar em prédios?", a:["Atrás da pessoa protegida","À frente","Ao lado","Distante"], correct:0},
-    {type:"text", q:"Data da Parte de Deserção para ausência desde 05 de março:", answer:"15 de março de 2024"},
-    {type:"text", q:"Termo que registra a anexação de papéis à prova:", answer:"juntada"},
-    {type:"text", q:"O Termo de Compromisso exige que o escrivão mantenha o:", answer:"sigilo"},
-    {type:"mc", q:"A quem o SP deve observar no tribunal para evitar ferimentos?", a:["O preso","O juiz","O público","O advogado"], correct:0},
-    {type:"text", q:"Como são ouvidas as testemunhas na Sindicância?", answer:"termo de depoimento"},
-    {type:"mc", q:"Qual o documento de compromisso do escrivão?", a:["Termo de Compromisso","Portaria","Juntada","Autuação"], correct:0}
+    // --- DOCUMENTO ADM NAVAL (17 questões complementares) ---
+    {type:"mc", q:"Dever das Praças: Executar as tarefas necessárias à...", a:["Manutenção e operação","Somente limpeza","Pintura apenas","Troca de guarda"], correct:0},
+    {type:"mc", q:"Qual licença NÃO existe nas normas citadas?", a:["LECEP","LAC","LA","LP"], correct:0},
+    {type:"text", q:"Como é chamada a designação de escrivão por pessoa idônea?", answer:"Escrivão ad hoc."},
+    {type:"mc", q:"Qual órgão é de assistência direta ao Ministério da Defesa?", a:["Assessoria Especial Militar","ESG","Calha Norte","HFA"], correct:0},
+    {type:"mc", q:"O Estágio de Aplicação tem duração de quanto tempo?", a:["Um ano","Seis meses","Dois anos","Três meses"], correct:0},
+    {type:"text", q:"Quem é ouvido no Termo de Depoimento?", answer:"As testemunhas."},
+    {type:"text", q:"Quem é ouvido no Termo de Declaração?", answer:"O ofendido."},
+    {type:"mc", q:"Promoção baseada na precedência hierárquica é:", a:["Antiguidade","Merecimento","Bravura","Especial"], correct:0},
+    {type:"text", q:"O que o SP deve fazer para evitar que o preso se fira no tribunal?", answer:"Observar atentamente o preso e o ambiente."},
+    {type:"mc", q:"A Bandeira Nacional pode ser usada como revestimento de tribuna?", a:["Não, é proibido","Sim, em cerimônias","Apenas no Dia da Bandeira","Com autorização"], correct:0},
+    {type:"mc", q:"Pode-se fazer saudação com a Bandeira Nacional?", a:["Não, salvo em retribuição a outro navio/estabelecimento","Sim, sempre","Apenas para o Presidente","Nunca"], correct:0},
+    {type:"text", q:"O que acontece se a praça se evadir do poder da escolta?", answer:"Caracteriza crime de deserção se permanecer ausente."},
+    {type:"text", q:"O que é necessário constar na Autuação da Sindicância?", answer:"Portaria de Instauração, anexos e Termo de Compromisso."},
+    {type:"mc", q:"Atenuante: Tempo de serviço militar menor de...", a:["6 meses","1 ano","2 anos","3 meses"], correct:0},
+    {type:"text", q:"Qual a importância da Juntada?", answer:"Anexar documentos ou papéis que interessem à prova."},
+    {type:"text", q:"Onde o SP exerce a custódia do preso além da OM?", answer:"Hospitais, tribunais e durante o translado."},
+    {type:"mc", q:"Dever das Praças: Tomar parte nas...", a:["Mostras, fainas e exercícios","Apenas fainas","Apenas mostras","Festas da OM"], correct:0}
 ];
 
 let shuffled=[]; let current=0; let score=0;
 function shuffle(arr){ for(let i=arr.length-1;i>0;i--){ let j=Math.floor(Math.random()*(i+1)); [arr[i],arr[j]]=[arr[j],arr[i]]; } }
 function start(){ shuffled=[...questions]; shuffle(shuffled); current=0; score=0; show(); }
+
 function show(){
     document.getElementById("nextBtn").style.display="none";
     document.getElementById("result").innerText="";
+    document.getElementById("feedback").innerHTML="";
     document.getElementById("progress").innerText="Questão "+(current+1)+" de "+shuffled.length;
     let q=shuffled[current];
     document.getElementById("question").innerText=q.q;
     document.getElementById("options").innerHTML="";
     document.getElementById("discursive").innerHTML="";
+
     if(q.type==="mc"){
         let answers=[...q.a]; let cor=q.a[q.correct]; shuffle(answers);
         answers.forEach(ans=>{
             let div=document.createElement("div"); div.className="option"; div.innerText=ans;
-            div.onclick=()=>select(div,ans,cor); document.getElementById("options").appendChild(div);
+            div.onclick=()=>selectMC(div,ans,cor); document.getElementById("options").appendChild(div);
         });
     }else{
-        let input=document.createElement("input"); input.id="textAns";
-        let btn=document.createElement("button"); btn.innerText="Responder";
-        btn.onclick=()=>checkText(q.answer);
+        let input=document.createElement("input"); input.id="textAns"; input.placeholder="Digite sua resposta e clique abaixo para conferir...";
+        let btn=document.createElement("button"); btn.innerText="Conferir Resposta Oficial";
+        btn.onclick=()=>showDiscursive(q.answer);
         document.getElementById("discursive").appendChild(input); document.getElementById("discursive").appendChild(btn);
     }
 }
-function select(el,sel,cor){
+
+function selectMC(el,sel,cor){
     document.querySelectorAll(".option").forEach(o=>o.onclick=null);
-    if(sel===cor){ el.classList.add("correct"); score++; } else { el.classList.add("wrong"); document.querySelectorAll(".option").forEach(o=>{if(o.innerText===cor)o.classList.add("correct")});}
+    if(sel===cor){ el.classList.add("correct"); score++; } 
+    else { el.classList.add("wrong"); document.querySelectorAll(".option").forEach(o=>{if(o.innerText===cor)o.classList.add("correct")});}
     document.getElementById("nextBtn").style.display="inline-block";
 }
-function checkText(cor){
-    let val=document.getElementById("textAns").value.toLowerCase().trim();
-    if(val.length > 2 && cor.toLowerCase().includes(val)){ score++; document.getElementById("result").innerText="✅ Correto!"; }
-    else { document.getElementById("result").innerText="❌ Resposta: "+cor; }
+
+function showDiscursive(answer){
+    let userVal = document.getElementById("textAns").value;
+    document.getElementById("feedback").innerHTML = `
+        <div class="feedback-box">
+            <strong>Sua Resposta:</strong><br>${userVal || "<i>Nada digitado</i>"}<br><br>
+            <strong>Resposta Oficial (PDF):</strong><br><span style="color:#ffcc00">${answer}</span>
+        </div>`;
     document.getElementById("nextBtn").style.display="inline-block";
+    document.getElementById("discursive").querySelectorAll("button")[0].disabled = true;
 }
+
 function nextQuestion(){ current++; if(current<shuffled.length) show(); else finish(); }
+
 function finish(){
-    document.getElementById("question").innerText="FIM! Acertos: "+score+"/"+shuffled.length;
+    document.getElementById("question").innerText="SIMULADO FINALIZADO";
     document.getElementById("options").innerHTML=""; document.getElementById("discursive").innerHTML="";
-    document.getElementById("progress").innerText=""; document.getElementById("nextBtn").style.display="none";
+    document.getElementById("feedback").innerHTML="";
+    document.getElementById("progress").innerText=""; 
+    document.getElementById("result").innerHTML= `<h3>Você completou todas as 43 questões!</h3>
+    <p>Pontuação nas Objetivas: ${score} acertos.</p>
+    <button onclick="location.reload()">Reiniciar Simulado</button>`;
+    document.getElementById("nextBtn").style.display="none";
 }
+
 start();
 </script>
 </body>
