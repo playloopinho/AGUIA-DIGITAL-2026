@@ -2,15 +2,14 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <title>Simulado Oficial - Administração Naval</title>
 <style>
     body { font-family: 'Segoe UI', sans-serif; background:#0b1e3d; margin:0; color:white; padding-bottom: 130px; }
     
-    /* Brasão aumentado e centralizado */
     .header-banner { 
         width: 100%; 
-        height: 150px; /* Aumentado para o tamanho antigo de destaque */
+        height: 150px; 
         background-color: #0b1e3d; 
         background-image: url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png'); 
         background-size: contain; 
@@ -20,7 +19,6 @@
         padding: 10px 0;
     }
 
-    /* Container centralizado */
     .container { 
         display: flex; 
         flex-direction: column;
@@ -50,13 +48,12 @@
         font-weight: bold; 
         text-align: left; 
         font-size: 15px; 
-        transition: 0.2s;
     }
 
-    .option:hover { background: #3a8ee0; }
     .correct { background: green !important; color: white; }
     .wrong { background: red !important; color: white; }
 
+    /* Input com 16px para evitar zoom indesejado no mobile */
     input { 
         width: 100%; 
         box-sizing: border-box;
@@ -67,6 +64,7 @@
         background: #0b1e3d; 
         color: white; 
         text-align: center;
+        font-size: 16px; 
     }
 
     button { 
@@ -84,13 +82,11 @@
     #feedback-area { background: #071426; padding: 15px; margin-top: 15px; border-left: 5px solid #ffcc00; text-align: left; border-radius: 4px; }
     .res-oficial { color: #ffcc00; font-weight: bold; }
 
-    /* Barra de navegação inferior */
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
     .nav-title { font-size: 11px; text-align: center; color: #4da6ff; margin-bottom: 8px; font-weight: bold; text-transform: uppercase; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 15px; gap: 8px; }
     .nav-item { flex: 0 0 60px; height: 40px; background: #132b52; border: 1px solid #4da6ff; border-radius: 6px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; }
 
-    /* Modal de Gabarito */
     .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; max-width: 450px; background: white; color: #0b1e3d; padding: 20px; border-radius: 12px; z-index: 200; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 150; }
 </style>
@@ -102,15 +98,11 @@
 <div class="container">
     <div class="box" id="mainBox">
         <div id="progress" style="font-size: 12px; color: #4da6ff; margin-bottom: 10px; font-weight: bold;"></div>
-        
         <h4 id="question-header" style="margin: 0; color: #ffcc00; font-size: 18px; letter-spacing: 1px; text-decoration: underline;"></h4>
-        
         <h3 id="question-text" style="margin: 20px 0; font-size: 18px; line-height: 1.4;"></h3>
-        
         <div id="options"></div>
         <div id="discursive"></div>
         <div id="feedback"></div>
-        
         <button id="nextBtn" onclick="nextQuestion()" style="display:none;">Próxima Questão</button>
     </div>
 </div>
@@ -131,13 +123,13 @@
 
 <script>
 const questions = [
-    // PDF 1 - ADM NAVAL
-    {id:"P1-01", q:"São deveres específicos de todas as Praças da Marinha, EXCETO?", a:["(A) Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executa-das por seus subordinados.","(B) Executar as tarefas necessárias à manutenção e operação dos equipamentos e à conservação de compartimentos de suas OM.","(C) Tomar parte nas mostras, fainas e exercícios, ocupando para isto o posto que les for designado.","(D) Desempenhar em serviço, no porto ou em viagem, as tarefas que lhes forem determinadas.","(E) Participar dos exercícios de cultura física e desportos."], correct:1, type:"mc"},
+    // PDF 1 - ADM NAVAL (17 questões)
+    {id:"P1-01", q:"São deveres específicos de todas as Praças da Marinha, EXCETO?", a:["(A) Cumprir as instruções que tiverem para o serviço...","(B) Executar as tarefas necessárias à manutenção e operação...","(C) Tomar parte nas mostras, fainas e exercícios...","(D) Desempenhar em serviço, no porto ou em viagem, as tarefas...","(E) Participar dos exercícios de cultura física e desportos."], correct:1, type:"mc"},
     {id:"P1-02", q:"Qual das alternativas abaixo não é considerada uma Licença?", a:["(A) Licença para acompanhar conjuge ou companheiro(a) (LAC).","(B) Licença à adotante (LA).","(C) Licença para tratamento de saúde de pessoa da família (LTSPE).","(D) Licença para frequentar curso de formação pessoal (LECEP).","(E) Licença paternidade (LP)."], correct:3, type:"mc"},
     {id:"P1-03", q:"Qual é o documento utilizado para registro de dependentes junto à DPMM e ao CPesFN?", answer:"Declaração de Dependente (DD).", type:"text"},
-    {id:"P1-04", q:"Qual das alternativas abaixo é uma circunstância atenuante da contravenção disciplinar?", a:["(A) Tratamento em serviço ordinário com rigor não autorizado pelos regulamentos militares.","(B) Ter sido cometida estando em risco a segurança da Organização Militar.","(C) legitima defesa, própria ou de outrem.","(D) Força maior ou caso fortuito plenamente comprovado.","(E) Prestação anterior de serviços relevantes não reconhecidos."], correct:0, type:"mc"},
-    {id:"P1-05", q:"Qual da alternativa abaixo não é um Requisito Básico para a Matricula em Curso?", a:["(A) Estar apta em inspeção de saúde.","(B) Ter nota de AMS igual ou superior a sete (7,00).","(C) Ter sido selecionada para o curso ou estágio.","(D) Ter sido aprovada no último JAE anual.","(E) Estar definitivamente impedida de acesso, conforme estabelecido no RPPM."], correct:4, type:"mc"},
-    {id:"P1-06", q:"Qual das Hipóteses não caracteriza como Crime de Deserção?", a:["(A) Ausentar-se da unidade por mais de oito dias.","(B) Tendo cumprido pena, deixar de se apresentar dentro do prazo de oito dias.","(C) Não se apresentar no lugar designado, findo o prazo de trânsito ou férias.","(D) Deixar de se apresentar à autoridade competente após licença cassada.","(E) Evadir-se do poder de escolta ou de recinto de prisão."], correct:2, type:"mc"},
+    {id:"P1-04", q:"Qual das alternativas abaixo é uma circunstância atenuante da contravenção disciplinar?", a:["(A) Tratamento em serviço ordinário com rigor não autorizado...","(B) Ter sido cometida estando em risco a segurança da OM.","(C) legitima defesa, própria ou de outrem.","(D) Força maior ou caso fortuito plenamente comprovado.","(E) Prestação anterior de serviços relevantes não reconhecidos."], correct:0, type:"mc"},
+    {id:"P1-05", q:"Qual da alternativa abaixo não é um Requisito Básico para a Matricula em Curso?", a:["(A) Estar apta em inspeção de saúde.","(B) Ter nota de AMS igual ou superior a sete (7,00).","(C) Ter sido selecionada para o curso ou estágio.","(D) Ter sido aprovada no último JAE anual.","(E) Estar definitivamente impedida de acesso."], correct:4, type:"mc"},
+    {id:"P1-06", q:"Qual das Hipóteses não caracteriza como Crime de Deserção?", a:["(A) Ausentar-se por mais de oito dias.","(B) Deixar de se apresentar dentro de 8 dias após pena.","(C) Não se apresentar findo o prazo de trânsito ou férias.","(D) Deixar de se apresentar após licença cassada.","(E) Evadir-se do poder de escolta ou prisão."], correct:2, type:"mc"},
     {id:"P1-07", q:"Procedimento administrativo sumário com objetivo de mera apuração preliminar?", answer:"Sindicância.", type:"text"},
     {id:"P1-08", q:"Qual Órgão é um Órgão de Assistência direta e imediata do Ministério da Defesa?", answer:"Assessoria Especial Militar.", type:"text"},
     {id:"P1-09", q:"Estágio realizado pelas Praças após os cursos, com duração de um ano?", answer:"Estágio de Aplicação.", type:"text"},
@@ -150,8 +142,8 @@ const questions = [
     {id:"P1-16", q:"Qual o termo inicial da Sindicância subscrito pelo escrivão?", answer:"Autuação.", type:"text"},
     {id:"P1-17", q:"Qual dia (data) será lavrada a Parte de Deserção para ausência iniciada em 05/03/2024?", answer:"15 de março de 2024.", type:"text"},
 
-    // PDF 2 - QUESTIONÁRIO
-    {id:"P2-01", q:"Documento utilizado para registro de dependentes junto à DPMM e CPesFN?", answer:"Declaração de Dependente (DD).", type:"text"},
+    // PDF 2 - QUESTIONÁRIO (26 questões)
+    {id:"P2-01", q:"Documento para registro de dependentes junto à DPMM e CPesFN?", answer:"Declaração de Dependente (DD).", type:"text"},
     {id:"P2-02", q:"Órgão de Direção Setorial que contribui para o preparo em economia e finanças?", answer:"Secretaria-Geral da Marinha (SGM).", type:"text"},
     {id:"P2-03", q:"Cite os deveres específicos de todas as Praças da Marinha (Item A).", answer:"Cumprir as instruções que tiverem para o serviço, executando-as e fazendo com que sejam bem executadas.", type:"text"},
     {id:"P2-04", q:"Quais as circunstâncias atenuantes da contravenção disciplinar?", answer:"Bons antecedentes; Idade < 18; Tempo < 6 meses; Serviços relevantes; Rigor não autorizado; Provocação.", type:"text"},
@@ -194,7 +186,7 @@ function openModal(idx) {
     const q = questions[idx];
     document.getElementById("modal-title").innerText = "GABARITO " + q.id;
     let resp = q.type === "mc" ? q.a[q.correct] : q.answer;
-    document.getElementById("modal-body").innerHTML = `<strong>${q.q}</strong><hr><strong>RESPOSTA OFICIAL:</strong><br><span class="res-oficial">${resp}</span>`;
+    document.getElementById("modal-body").innerHTML = `<strong>${q.q}</strong><hr><strong>RESPOSTA:</strong><br><span class="res-oficial">${resp}</span>`;
     document.getElementById("modal").style.display = "block"; document.getElementById("overlay").style.display = "block";
 }
 
@@ -227,7 +219,7 @@ function show(){
             document.getElementById("options").appendChild(d);
         });
     } else {
-        let inp = document.createElement("input"); inp.placeholder="Digite sua resposta aqui...";
+        let inp = document.createElement("input"); inp.placeholder="Digite sua resposta...";
         let b = document.createElement("button"); b.innerText="Conferir Gabarito";
         b.onclick=() => {
             document.getElementById("feedback").innerHTML = `<div id="feedback-area"><strong>Resposta do PDF:</strong><br><span class="res-oficial">${q.answer}</span></div>`;
@@ -237,7 +229,7 @@ function show(){
     }
 }
 
-function nextQuestion(){ current++; if(current < shuffled.length) show(); else { alert("Você completou todas as questões!"); location.reload(); } }
+function nextQuestion(){ current++; if(current < shuffled.length) show(); else { alert("Simulado Concluído!"); location.reload(); } }
 start();
 </script>
 </body>
