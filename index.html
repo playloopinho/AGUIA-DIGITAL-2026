@@ -27,7 +27,7 @@ h1{
 }
 button{
     padding:10px 20px;
-    margin-top:15px;
+    margin-top:10px;
     border:none;
     border-radius:5px;
     cursor:pointer;
@@ -63,8 +63,6 @@ button{
 <script>
 
 const questions = [
-
-// (MANTIVE SUAS QUESTÕES EXATAMENTE COMO ESTÃO)
 
 { q:"1) Documento utilizado para registro de dependentes junto à DPMM e CPesFN?",
 a:["Declaração de Dependente (DD)","Portaria Administrativa","Ficha Militar","Termo de Registro"], correct:0},
@@ -147,7 +145,8 @@ a:["Cumprir instruções e executar o serviço","Recusar ordens","Evitar exercí
 ];
 
 let currentQuestion = 0;
-let score = 0;
+let totalScore = 0;
+let blockScore = 0;
 let shuffledQuestions = [];
 
 function shuffle(array){
@@ -158,7 +157,8 @@ let j=Math.floor(Math.random()*(i+1));
 }
 
 function startQuiz(){
-score = 0;
+totalScore = 0;
+blockScore = 0;
 currentQuestion = 0;
 shuffledQuestions = [...questions];
 shuffle(shuffledQuestions);
@@ -170,6 +170,7 @@ showQuestion();
 function showQuestion(){
 let quiz=document.getElementById("quiz");
 quiz.innerHTML="";
+
 let qObj = shuffledQuestions[currentQuestion];
 
 let qDiv=document.createElement("div");
@@ -200,24 +201,10 @@ let buttons=document.querySelectorAll(".question button");
 buttons.forEach(btn=>btn.disabled=true);
 
 if(selected===correct){
-score++;
-buttons.forEach(btn=>{
-if(btn.innerText===shuffledQuestions[currentQuestion].a[correct]){
-btn.classList.add("correct");
-}
-});
+totalScore++;
+blockScore++;
 document.getElementById("result").innerText="✅ CERTO!";
 }else{
-buttons.forEach(btn=>{
-if(btn.innerText===shuffledQuestions[currentQuestion].a[correct]){
-btn.classList.add("correct");
-}
-});
-buttons.forEach(btn=>{
-if(btn.classList.contains("correct")==false && btn.innerText===buttons[selected]?.innerText){
-btn.classList.add("wrong");
-}
-});
 document.getElementById("result").innerText="❌ ERRADO!";
 }
 
@@ -226,15 +213,43 @@ document.getElementById("nextBtn").style.display="inline-block";
 
 function nextQuestion(){
 currentQuestion++;
+
 document.getElementById("result").innerText="";
 document.getElementById("nextBtn").style.display="none";
+
+if(currentQuestion % 10 === 0 && currentQuestion !== 0){
+showBlockResult();
+return;
+}
 
 if(currentQuestion < shuffledQuestions.length){
 showQuestion();
 }else{
 document.getElementById("quiz").innerHTML="";
 document.getElementById("result").innerText=
-"🎯 Você acertou "+score+" de "+shuffledQuestions.length+" questões!";
+"🏆 RESULTADO FINAL: "+totalScore+" de "+shuffledQuestions.length;
+}
+}
+
+function showBlockResult(){
+let quiz=document.getElementById("quiz");
+quiz.innerHTML=`
+<div class="question">
+<h2>📊 Resultado das últimas 10 perguntas</h2>
+<p>Você acertou ${blockScore} de 10</p>
+<button onclick="continueQuiz()">Continuar</button>
+</div>
+`;
+blockScore = 0;
+}
+
+function continueQuiz(){
+if(currentQuestion < shuffledQuestions.length){
+showQuestion();
+}else{
+document.getElementById("quiz").innerHTML="";
+document.getElementById("result").innerText=
+"🏆 RESULTADO FINAL: "+totalScore+" de "+shuffledQuestions.length;
 }
 }
 
