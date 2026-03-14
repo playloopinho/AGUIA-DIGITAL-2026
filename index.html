@@ -36,18 +36,16 @@
         text-align: center; 
         box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
         border: 1px solid #1c437a; 
-        transition: all 0.3s ease;
     }
 
-    #progress-container { width: 100%; background: #071426; border-radius: 10px; height: 8px; margin-bottom: 15px; overflow: hidden; }
-    #progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.4s ease; }
+    #progress-container { width: 100%; background: #071426; border-radius: 10px; height: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid #1c437a; }
+    #progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; box-shadow: 0 0 10px var(--accent); }
 
     #info-row { display: flex; justify-content: space-between; font-size: 11px; color: #4da6ff; font-weight: bold; margin-bottom: 10px; }
     
     #question-header { margin: 0; color: var(--accent); font-size: 16px; text-transform: uppercase; letter-spacing: 1px; }
-    #question-text { margin: 20px 0; font-size: 14px; line-height: 1.6; text-align: left; border-left: 3px solid var(--accent); padding-left: 15px; }
+    #question-text { margin: 20px 0; font-size: 14px; line-height: 1.6; text-align: left; border-left: 3px solid var(--accent); padding-left: 15px; min-height: 60px; }
 
-    .input-group { position: relative; margin-top: 15px; }
     input { 
         width: 100%; 
         box-sizing: border-box;
@@ -57,9 +55,7 @@
         background: #071426; 
         color: white; 
         font-size: 15px; 
-        transition: border 0.3s;
     }
-    input:focus { border-color: var(--accent); outline: none; }
 
     button { 
         margin-top: 15px; 
@@ -73,10 +69,7 @@
         text-transform: uppercase; 
         cursor: pointer;
         width: 100%;
-        transition: transform 0.1s, background 0.2s;
     }
-    button:active { transform: scale(0.98); }
-    button:hover { background: #e6b800; }
 
     #feedback-area { 
         background: #071426; 
@@ -85,17 +78,15 @@
         border-radius: 8px; 
         text-align: left; 
         display: none; 
-        animation: fadeIn 0.5s;
     }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     .res-oficial { color: var(--accent); font-weight: 600; display: block; margin-top: 10px; font-size: 13px; line-height: 1.5; }
 
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
     .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 15px; gap: 10px; scrollbar-width: none; }
-    .nav-item { flex: 0 0 50px; height: 50px; background: var(--secondary); border: 2px solid #1c437a; border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; }
-    .nav-item.active { border-color: var(--accent); background: #1c437a; }
+    .nav-item { flex: 0 0 50px; height: 50px; background: var(--secondary); border: 2px solid #1c437a; border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; }
 
+    /* Modal */
     .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; color: var(--primary); padding: 25px; border-radius: 15px; z-index: 200; box-shadow: 0 0 40px rgba(0,0,0,0.9); }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 150; backdrop-filter: blur(3px); }
 </style>
@@ -107,29 +98,29 @@
 <div class="container">
     <div class="box">
         <div id="info-row">
-            <span id="counter">QUESTÃO 1 / 22</span>
+            <span id="counter">INICIANDO...</span>
             <span id="score">ACERTOS: 0</span>
         </div>
         <div id="progress-container"><div id="progress-bar"></div></div>
         
         <h4 id="question-header">PERGUNTA</h4>
-        <div id="question-text">Carregando...</div>
+        <div id="question-text">Carregando conteúdo...</div>
         
         <div id="quiz-controls">
-            <input type="text" id="userInput" placeholder="Sua resposta (palavras-chave)..." autocomplete="off">
+            <input type="text" id="userInput" placeholder="Digite sua resposta aqui..." autocomplete="off">
             <button id="checkBtn" onclick="checkAnswer()">Validar Resposta</button>
         </div>
         
         <div id="feedback-area">
             <strong id="status-label">GABARITO:</strong>
             <span class="res-oficial" id="correct-answer"></span>
-            <button id="nextBtn" onclick="nextQuestion()" style="background: var(--success); color: white; margin-top: 15px;">Avançar</button>
+            <button id="nextBtn" onclick="confirmNext()" style="background: var(--success); color: white; margin-top: 15px;">Ir para Próxima Questão</button>
         </div>
     </div>
 </div>
 
 <div class="footer-nav">
-    <div style="text-align: center; font-size: 9px; color: #4da6ff; margin-bottom: 5px; font-weight: bold;">MAPA DE QUESTÕES</div>
+    <div style="text-align: center; font-size: 9px; color: #4da6ff; margin-bottom: 5px; font-weight: bold;">MAPA DE QUESTÕES (GABARITO RÁPIDO)</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
@@ -169,12 +160,12 @@ const questions = [
 ];
 
 let currentIndex = 0;
+let questionsAnsweredCount = 0; // Nova variável para rastrear o progresso real
 let correctCount = 0;
 
 function init() {
-    // Removido o embaralhamento (sort random) para manter a ordem crescente
     createNavBar();
-    showQuestion();
+    updateQuestionDisplay();
 }
 
 function createNavBar() {
@@ -183,30 +174,21 @@ function createNavBar() {
     questions.forEach((q, idx) => {
         let div = document.createElement("div");
         div.className = "nav-item";
-        div.id = "nav-" + idx;
         div.innerText = q.id;
-        div.onclick = () => jumpTo(idx);
+        div.onclick = () => openModal(idx);
         navBar.appendChild(div);
     });
 }
 
-function showQuestion() {
+function updateQuestionDisplay() {
     let q = questions[currentIndex];
     document.getElementById("feedback-area").style.display = "none";
     document.getElementById("userInput").value = "";
-    document.getElementById("userInput").style.borderColor = "#1c437a";
     document.getElementById("quiz-controls").style.display = "block";
     
     document.getElementById("question-header").innerText = "QUESTÃO " + q.id;
     document.getElementById("question-text").innerText = q.q;
-    
-    // Atualiza Progresso
-    document.getElementById("counter").innerText = `QUESTÃO ${currentIndex + 1} / ${questions.length}`;
-    document.getElementById("progress-bar").style.width = ((currentIndex + 1) / questions.length * 100) + "%";
-    
-    // Marca nav-item ativa
-    document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
-    document.getElementById("nav-" + currentIndex).classList.add("active");
+    document.getElementById("counter").innerText = `QUESTÃO ${currentIndex + 1} DE ${questions.length}`;
 }
 
 function checkAnswer() {
@@ -219,38 +201,43 @@ function checkAnswer() {
     document.getElementById("correct-answer").innerText = q.answer;
 
     if(matches.length >= 1 || userVal.length > 5) {
-        document.getElementById("userInput").style.borderColor = "var(--success)";
-        document.getElementById("status-label").innerText = "MUITO BEM! VEJA A RESPOSTA COMPLETA:";
+        document.getElementById("status-label").innerText = "MUITO BEM! GABARITO:";
         document.getElementById("status-label").style.color = "var(--success)";
         correctCount++;
         document.getElementById("score").innerText = "ACERTOS: " + correctCount;
     } else {
-        document.getElementById("userInput").style.borderColor = "var(--error)";
-        document.getElementById("status-label").innerText = "VEJA A RESPOSTA CORRETA:";
+        document.getElementById("status-label").innerText = "CONFIRA O GABARITO:";
         document.getElementById("status-label").style.color = "var(--accent)";
     }
 }
 
-function nextQuestion() {
+function confirmNext() {
+    // Aumenta o contador de questões finalizadas
+    questionsAnsweredCount++;
+    
+    // Atualiza a BARRA DE PROGRESSO baseada em questões REALMENTE respondidas
+    let progressPercent = (questionsAnsweredCount / questions.length) * 100;
+    document.getElementById("progress-bar").style.width = progressPercent + "%";
+
+    // Vai para a próxima pergunta
     currentIndex++;
     if(currentIndex < questions.length) {
-        showQuestion();
+        updateQuestionDisplay();
     } else {
-        alert("Simulado Concluído! Acertos: " + correctCount);
-        currentIndex = 0;
-        showQuestion();
+        alert("Excelente! Você finalizou todas as questões do simulado.");
+        location.reload(); // Reinicia o estudo
     }
-}
-
-function jumpTo(idx) {
-    currentIndex = idx;
-    showQuestion();
 }
 
 function openModal(idx) {
     const q = questions[idx];
-    document.getElementById("modal-title").innerText = "GABARITO Q" + q.id;
-    document.getElementById("modal-body").innerHTML = `<strong>${q.q}</strong><br><br><span style="color:#d35400">R: ${q.answer}</span>`;
+    document.getElementById("modal-title").innerText = "GABARITO - QUESTÃO " + q.id;
+    document.getElementById("modal-body").innerHTML = `
+        <div style="font-weight:bold; color:#0b1e3d; margin-bottom:5px;">PERGUNTA:</div>
+        <div style="background:#f0f4f8; padding:12px; border-radius:8px; margin-bottom:20px; font-size:13px;">${q.q}</div>
+        <div style="font-weight:bold; color:#d35400; margin-bottom:5px;">RESPOSTA OFICIAL:</div>
+        <div style="background:#fff3e0; padding:12px; border-radius:8px; line-height:1.6; color:#333; font-size:13px; border-left:4px solid #ff9800;">${q.answer}</div>
+    `;
     document.getElementById("modal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
 }
