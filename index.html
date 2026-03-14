@@ -14,15 +14,14 @@
         --error: #e74c3c;
     }
 
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--primary); margin:0; color: var(--text); padding-bottom: 160px; overflow-x: hidden; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--primary); margin:0; color: var(--text); padding-bottom: 180px; overflow-x: hidden; }
     
     .header-banner { 
         width: 100%; 
-        height: 120px; 
+        height: 100px; 
         background: var(--primary) url('https://upload.wikimedia.org/wikipedia/commons/0/0b/Brasão_do_Corpo_de_Fuzileiros_Navais.png') no-repeat center; 
         background-size: contain; 
         margin: 10px 0;
-        filter: drop-shadow(0 0 8px rgba(0,0,0,0.5));
     }
 
     .container { display: flex; flex-direction: column; align-items: center; padding: 10px; }
@@ -39,56 +38,49 @@
     }
 
     #progress-container { width: 100%; background: #071426; border-radius: 10px; height: 10px; margin-bottom: 15px; overflow: hidden; border: 1px solid #1c437a; }
-    #progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; box-shadow: 0 0 10px var(--accent); }
+    #progress-bar { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
 
     #info-row { display: flex; justify-content: space-between; font-size: 11px; color: #4da6ff; font-weight: bold; margin-bottom: 10px; }
     
-    #question-header { margin: 0; color: var(--accent); font-size: 16px; text-transform: uppercase; letter-spacing: 1px; }
-    #question-text { margin: 20px 0; font-size: 14px; line-height: 1.6; text-align: left; border-left: 3px solid var(--accent); padding-left: 15px; min-height: 60px; }
+    #question-header { margin: 0; color: var(--accent); font-size: 16px; text-transform: uppercase; }
+    #question-text { margin: 15px 0; font-size: 14px; line-height: 1.6; text-align: left; border-left: 3px solid var(--accent); padding-left: 15px; min-height: 50px; }
 
     textarea { 
         width: 100%; 
         box-sizing: border-box;
-        padding: 15px; 
+        padding: 12px; 
         border-radius: 8px; 
         border: 2px solid #1c437a; 
         background: #071426; 
         color: white; 
-        font-size: 15px; 
-        font-family: inherit;
+        font-size: 14px; 
         resize: none;
     }
 
-    button { 
-        margin-top: 15px; 
-        padding: 14px; 
-        border: none; 
-        border-radius: 8px; 
-        background: var(--accent); 
-        color: var(--primary); 
-        font-weight: 800; 
-        font-size: 13px;
-        text-transform: uppercase; 
-        cursor: pointer;
-        width: 100%;
-    }
+    .btn-main { margin-top: 10px; padding: 12px; border: none; border-radius: 8px; background: var(--accent); color: var(--primary); font-weight: 800; cursor: pointer; width: 100%; text-transform: uppercase; }
+    
+    #hint-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); margin-top: 10px; padding: 8px; font-size: 11px; width: auto; min-width: 120px; }
 
-    #feedback-area { 
-        background: #071426; 
-        padding: 15px; 
-        margin-top: 20px; 
+    #hint-box { 
+        background: rgba(77, 166, 255, 0.1); 
         border-radius: 8px; 
-        text-align: left; 
+        padding: 10px; 
+        margin-top: 10px; 
+        font-size: 12px; 
+        color: #b3d9ff; 
         display: none; 
+        text-align: left;
+        border: 1px dashed #1c437a;
     }
 
-    .res-oficial { color: var(--accent); font-weight: 600; display: block; margin-top: 10px; font-size: 13px; line-height: 1.5; }
+    #feedback-area { background: #071426; padding: 15px; margin-top: 15px; border-radius: 8px; text-align: left; display: none; }
+    .res-oficial { color: var(--accent); font-weight: 600; display: block; margin-top: 8px; font-size: 13px; }
 
     .footer-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #071426; border-top: 2px solid #1c437a; padding: 10px 0; z-index: 100; }
-    .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 15px; gap: 10px; scrollbar-width: none; }
-    .nav-item { flex: 0 0 50px; height: 50px; background: var(--secondary); border: 2px solid #1c437a; border-radius: 10px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; color: #4da6ff; }
+    .scroll-wrapper { display: flex; overflow-x: auto; padding: 0 15px; gap: 8px; }
+    .nav-item { flex: 0 0 45px; height: 45px; background: var(--secondary); border: 1px solid #1c437a; border-radius: 8px; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 12px; font-weight: bold; color: #4da6ff; }
 
-    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; color: var(--primary); padding: 25px; border-radius: 15px; z-index: 200; box-shadow: 0 0 40px rgba(0,0,0,0.9); }
+    .modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; background: white; color: var(--primary); padding: 25px; border-radius: 15px; z-index: 200; }
     .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 150; backdrop-filter: blur(3px); }
 </style>
 </head>
@@ -104,34 +96,36 @@
         </div>
         <div id="progress-container"><div id="progress-bar"></div></div>
         
-        <h4 id="question-header">PERGUNTA</h4>
-        <div id="question-text">Carregando...</div>
+        <h4 id="question-header">QUESTÃO</h4>
+        <div id="question-text">...</div>
         
         <div id="quiz-controls">
-            <textarea id="userInput" rows="3" placeholder="Escreva sua resposta aqui para memorizar..."></textarea>
-            <button id="checkBtn" onclick="checkAnswer()">Validar Resposta</button>
+            <textarea id="userInput" rows="3" placeholder="Sua resposta..."></textarea>
+            <button id="hint-btn" onclick="giveHint()">💡 PEDIR DICA (0/5)</button>
+            <div id="hint-box"></div>
+            <button class="btn-main" onclick="checkAnswer()">Validar Resposta</button>
         </div>
         
         <div id="feedback-area">
             <strong id="status-label">GABARITO:</strong>
             <span class="res-oficial" id="correct-answer"></span>
-            <button id="nextBtn" onclick="confirmNext()" style="background: var(--success); color: white; margin-top: 15px;">Próxima Questão (Aleatória)</button>
+            <button class="btn-main" onclick="confirmNext()" style="background: var(--success); color: white;">Próxima Questão</button>
         </div>
     </div>
 </div>
 
 <div class="footer-nav">
-    <div style="text-align: center; font-size: 9px; color: #4da6ff; margin-bottom: 5px; font-weight: bold;">GABARITO RÁPIDO (ORDEM DO PDF)</div>
+    <div style="text-align: center; font-size: 9px; color: #4da6ff; margin-bottom: 5px; font-weight: bold;">GABARITO RÁPIDO (PDF)</div>
     <div class="scroll-wrapper" id="navBar"></div>
 </div>
 
 <div class="overlay" id="overlay" onclick="closeModal()"></div>
 <div class="modal" id="modal">
     <div style="display:flex; justify-content: space-between; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 15px;">
-        <span id="modal-title" style="font-weight:bold; color: var(--primary)"></span>
-        <span onclick="closeModal()" style="cursor:pointer; font-size: 24px; line-height: 1;">&times;</span>
+        <span id="modal-title" style="font-weight:bold;"></span>
+        <span onclick="closeModal()" style="cursor:pointer; font-size: 20px;">&times;</span>
     </div>
-    <div id="modal-body" style="font-size: 14px; line-height: 1.6; max-height: 60vh; overflow-y: auto; color: #333;"></div>
+    <div id="modal-body" style="font-size: 14px; color: #333;"></div>
 </div>
 
 <script>
@@ -160,33 +154,29 @@ const questions = [
     {id:"22", q:"A Marinha do Brasil possui sete órgãos de Direção Setorial. Cite-os.", answer:"ComOpNav, SGM, DGMM, DGPM, DGN, DGDNTM e CGCFN.", keys:["comopnav", "sgm", "dgmm", "dgpm", "dgn", "dgdntm", "cgcfn"]}
 ];
 
-let shuffledQuestions = [];
-let currentShuffledIdx = 0;
+let shuffled = [];
+let currentIndex = 0;
 let answeredCount = 0;
 let correctCount = 0;
+let hintLevel = 0;
 
 function init() {
     createNavBar();
-    
-    // Carrega progresso salvo (Item 3)
     const savedIdx = localStorage.getItem('gestao_idx');
-    const savedAnswered = localStorage.getItem('gestao_answered');
-    const savedCorrect = localStorage.getItem('gestao_correct');
+    const savedAns = localStorage.getItem('gestao_ans');
+    const savedCor = localStorage.getItem('gestao_cor');
     
-    if(savedIdx) currentShuffledIdx = parseInt(savedIdx);
-    if(savedAnswered) answeredCount = parseInt(savedAnswered);
-    if(savedCorrect) correctCount = parseInt(savedCorrect);
+    if(savedIdx) currentIndex = parseInt(savedIdx);
+    if(savedAns) answeredCount = parseInt(savedAns);
+    if(savedCor) correctCount = parseInt(savedCor);
 
-    // Gera ordem randômica mas fixa para a sessão
-    shuffledQuestions = [...questions].sort(() => 0.5 - Math.random());
-    
+    shuffled = [...questions].sort(() => 0.5 - Math.random());
     updateDisplay();
 }
 
 function createNavBar() {
     const navBar = document.getElementById("navBar");
     navBar.innerHTML = "";
-    // O Mapa SEMPRE segue a ordem do PDF (1 a 22)
     questions.forEach((q, idx) => {
         let div = document.createElement("div");
         div.className = "nav-item";
@@ -197,74 +187,79 @@ function createNavBar() {
 }
 
 function updateDisplay() {
-    if(currentShuffledIdx >= questions.length) {
-        currentShuffledIdx = 0;
-        answeredCount = 0;
-        shuffledQuestions = [...questions].sort(() => 0.5 - Math.random());
+    if(currentIndex >= questions.length) {
+        alert("Simulado concluído!");
+        localStorage.clear();
+        location.reload();
+        return;
     }
-
-    let q = shuffledQuestions[currentShuffledIdx];
-    document.getElementById("feedback-area").style.display = "none";
-    document.getElementById("userInput").value = "";
-    document.getElementById("quiz-controls").style.display = "block";
+    hintLevel = 0;
+    document.getElementById("hint-box").style.display = "none";
+    document.getElementById("hint-box").innerText = "";
+    document.getElementById("hint-btn").innerText = "💡 PEDIR DICA (0/5)";
     
-    // Mantém o número original do PDF no título
+    let q = shuffled[currentIndex];
+    document.getElementById("feedback-area").style.display = "none";
+    document.getElementById("quiz-controls").style.display = "block";
+    document.getElementById("userInput").value = "";
     document.getElementById("question-header").innerText = "QUESTÃO " + q.id;
     document.getElementById("question-text").innerText = q.q;
-    
     document.getElementById("counter").innerText = `QUESTÃO ${answeredCount + 1} DE ${questions.length}`;
     document.getElementById("score").innerText = "ACERTOS: " + correctCount;
-    
-    let progress = (answeredCount / questions.length) * 100;
-    document.getElementById("progress-bar").style.width = progress + "%";
+    document.getElementById("progress-bar").style.width = (answeredCount / questions.length * 100) + "%";
+}
+
+function giveHint() {
+    if (hintLevel >= 5) return;
+    hintLevel++;
+    const q = shuffled[currentIndex];
+    const hintBox = document.getElementById("hint-box");
+    hintBox.style.display = "block";
+    document.getElementById("hint-btn").innerText = `💡 PEDIR DICA (${hintLevel}/5)`;
+
+    let text = "";
+    switch(hintLevel) {
+        case 1: text = `Dica 1: A resposta tem cerca de ${q.answer.split(' ').length} palavras.`; break;
+        case 2: text = `Dica 2: Uma palavra importante é "${q.keys[0].toUpperCase()}".`; break;
+        case 3: text = `Dica 3: Começa com "${q.answer.split(' ').slice(0, 2).join(' ')}..."`; break;
+        case 4: text = `Dica 4: Outras palavras-chave: ${q.keys.slice(1, 3).join(', ')}.`; break;
+        case 5: text = `Dica 5 (Final): ${q.answer.substring(0, Math.floor(q.answer.length/2))}...`; break;
+    }
+    hintBox.innerHTML += `<div>• ${text}</div>`;
 }
 
 function checkAnswer() {
-    let q = shuffledQuestions[currentShuffledIdx];
+    let q = shuffled[currentIndex];
     let userVal = document.getElementById("userInput").value.toLowerCase();
-    let matches = q.keys.filter(key => userVal.includes(key.toLowerCase()));
+    let matches = q.keys.filter(k => userVal.includes(k.toLowerCase()));
     
     document.getElementById("quiz-controls").style.display = "none";
     document.getElementById("feedback-area").style.display = "block";
     document.getElementById("correct-answer").innerText = q.answer;
 
     if(matches.length >= 1 || userVal.length > 10) {
-        document.getElementById("status-label").innerText = "MUITO BEM! VEJA O GABARITO:";
+        document.getElementById("status-label").innerText = "MUITO BEM! RESPOSTA:";
         document.getElementById("status-label").style.color = "var(--success)";
         correctCount++;
     } else {
-        document.getElementById("status-label").innerText = "ATENÇÃO AO GABARITO:";
+        document.getElementById("status-label").innerText = "GABARITO OFICIAL:";
         document.getElementById("status-label").style.color = "var(--accent)";
     }
 }
 
 function confirmNext() {
     answeredCount++;
-    currentShuffledIdx++;
-    
-    // Salva progresso no navegador (Item 3)
-    localStorage.setItem('gestao_idx', currentShuffledIdx);
-    localStorage.setItem('gestao_answered', answeredCount);
-    localStorage.setItem('gestao_correct', correctCount);
-
-    if(answeredCount < questions.length) {
-        updateDisplay();
-    } else {
-        alert("Simulado Finalizado! Você revisou as 22 questões.");
-        localStorage.clear();
-        location.reload();
-    }
+    currentIndex++;
+    localStorage.setItem('gestao_idx', currentIndex);
+    localStorage.setItem('gestao_ans', answeredCount);
+    localStorage.setItem('gestao_cor', correctCount);
+    updateDisplay();
 }
 
 function openModal(idx) {
-    const q = questions[idx]; // Usa a lista original do PDF
-    document.getElementById("modal-title").innerText = "GABARITO - QUESTÃO " + q.id;
-    document.getElementById("modal-body").innerHTML = `
-        <div style="font-weight:bold; color:#0b1e3d; margin-bottom:5px;">PERGUNTA:</div>
-        <div style="background:#f0f4f8; padding:12px; border-radius:8px; margin-bottom:20px;">${q.q}</div>
-        <div style="font-weight:bold; color:#d35400; margin-bottom:5px;">RESPOSTA DO PDF:</div>
-        <div style="background:#fff3e0; padding:12px; border-radius:8px; line-height:1.6; color:#333; border-left:4px solid #ff9800;">${q.answer}</div>
-    `;
+    const q = questions[idx];
+    document.getElementById("modal-title").innerText = "GABARITO Q" + q.id;
+    document.getElementById("modal-body").innerHTML = `<p><strong>${q.q}</strong></p><p style="color:#d35400; font-weight:bold; border-top:1px solid #eee; pt-10">R: ${q.answer}</p>`;
     document.getElementById("modal").style.display = "block";
     document.getElementById("overlay").style.display = "block";
 }
