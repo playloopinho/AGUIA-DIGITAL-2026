@@ -168,12 +168,11 @@ const questions = [
     {id:"22", q:"A Marinha do Brasil possui sete órgãos de Direção Setorial. Cite-os.", answer:"ComOpNav, SGM, DGMM, DGPM, DGN, DGDNTM e CGCFN.", keys:["comopnav", "sgm", "dgmm", "dgpm", "dgn", "dgdntm", "cgcfn"]}
 ];
 
-let shuffled = [];
 let currentIndex = 0;
 let correctCount = 0;
 
 function init() {
-    shuffled = [...questions].sort(() => Math.random() - 0.5);
+    // Removido o embaralhamento (sort random) para manter a ordem crescente
     createNavBar();
     showQuestion();
 }
@@ -181,7 +180,7 @@ function init() {
 function createNavBar() {
     const navBar = document.getElementById("navBar");
     navBar.innerHTML = "";
-    shuffled.forEach((q, idx) => {
+    questions.forEach((q, idx) => {
         let div = document.createElement("div");
         div.className = "nav-item";
         div.id = "nav-" + idx;
@@ -192,7 +191,7 @@ function createNavBar() {
 }
 
 function showQuestion() {
-    let q = shuffled[currentIndex];
+    let q = questions[currentIndex];
     document.getElementById("feedback-area").style.display = "none";
     document.getElementById("userInput").value = "";
     document.getElementById("userInput").style.borderColor = "#1c437a";
@@ -202,8 +201,8 @@ function showQuestion() {
     document.getElementById("question-text").innerText = q.q;
     
     // Atualiza Progresso
-    document.getElementById("counter").innerText = `QUESTÃO ${currentIndex + 1} / ${shuffled.length}`;
-    document.getElementById("progress-bar").style.width = ((currentIndex + 1) / shuffled.length * 100) + "%";
+    document.getElementById("counter").innerText = `QUESTÃO ${currentIndex + 1} / ${questions.length}`;
+    document.getElementById("progress-bar").style.width = ((currentIndex + 1) / questions.length * 100) + "%";
     
     // Marca nav-item ativa
     document.querySelectorAll(".nav-item").forEach(n => n.classList.remove("active"));
@@ -211,7 +210,7 @@ function showQuestion() {
 }
 
 function checkAnswer() {
-    let q = shuffled[currentIndex];
+    let q = questions[currentIndex];
     let userVal = document.getElementById("userInput").value.toLowerCase();
     let matches = q.keys.filter(key => userVal.includes(key.toLowerCase()));
     
@@ -234,11 +233,12 @@ function checkAnswer() {
 
 function nextQuestion() {
     currentIndex++;
-    if(currentIndex < shuffled.length) {
+    if(currentIndex < questions.length) {
         showQuestion();
     } else {
         alert("Simulado Concluído! Acertos: " + correctCount);
-        location.reload();
+        currentIndex = 0;
+        showQuestion();
     }
 }
 
@@ -248,7 +248,7 @@ function jumpTo(idx) {
 }
 
 function openModal(idx) {
-    const q = shuffled[idx];
+    const q = questions[idx];
     document.getElementById("modal-title").innerText = "GABARITO Q" + q.id;
     document.getElementById("modal-body").innerHTML = `<strong>${q.q}</strong><br><br><span style="color:#d35400">R: ${q.answer}</span>`;
     document.getElementById("modal").style.display = "block";
